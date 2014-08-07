@@ -18,7 +18,13 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Testing your integrations
+
+We provide a CLI tool to send an event to your integration.
+
+```bash
+./bin/test_rainforest_integration -o hipchat_room=Developers -o hipchat_token=my_token hipchat
+```
 
 ## Contributing
 

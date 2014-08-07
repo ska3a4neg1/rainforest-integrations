@@ -11,7 +11,13 @@ module Rainforest
     # Your code goes here...
     def self.send_event(integration, event: , config: )
       integration = self.const_get(integration.capitalize).new(config)
-      integration.on_event(Event.new(event))
+      event = case event
+                when Event
+                  event
+                else
+                  Event.new(event)
+                end
+      integration.on_event(event)
     end
   end
 end
