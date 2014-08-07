@@ -6,9 +6,9 @@ module Rainforest
           expect(event).to be_an(described_class::Event)
         end
         described_class.send_event :hipchat, event: {
-          text_message: "",
-          html_message: "",
-          # TODO add more things here
+          text: "Some text",
+          html: "Some html",
+          is_failure: false,
         }, config: {}
 
       end
