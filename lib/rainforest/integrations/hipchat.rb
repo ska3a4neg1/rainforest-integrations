@@ -3,13 +3,14 @@ module Rainforest
     class Hipchat < Base
       include HttpIntegration
 
+      URL = "https://api.hipchat.com/v1/rooms/message".freeze
+
       config do
         string :hipchat_room
         string :hipchat_token
       end
 
       def on_event(event)
-        url = "https://api.hipchat.com/v1/rooms/message"
         message = event.to_html
         body = {
           room_id: config.hipchat_room,
@@ -20,7 +21,7 @@ module Rainforest
           color: event.failure? ? 'red' : 'green',
           auth_token: config.hipchat_token,
         }
-        post url, body: body
+        post URL, body: body
       end
     end
   end
