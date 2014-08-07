@@ -5,10 +5,18 @@ require "rainforest/integrations/base"
 require "rainforest/integrations/event"
 require "rainforest/integrations/http_integration"
 
-require "rainforest/integrations/hipchat"
 
 module Rainforest
   module Integrations
+    INTEGRATIONS = %w(
+      hipchat
+      pivotal
+    ).freeze
+
+    INTEGRATIONS.each do |integration|
+      require "rainforest/integrations/#{integration}"
+    end
+
     # Your code goes here...
     def self.send_event(integration, event: , config: )
       integration = self.const_get(integration.capitalize).new(config)
