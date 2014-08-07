@@ -10,6 +10,8 @@ module Rainforest
         string :pivotal_project_id
       end
 
+      receive_events "test_failure"
+
       def on_event(event)
         message = event.to_html
 

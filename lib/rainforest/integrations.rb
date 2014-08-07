@@ -19,14 +19,22 @@ module Rainforest
 
     # Your code goes here...
     def self.send_event(integration, event: , config: )
-      integration = self.const_get(integration.capitalize).new(config)
-      event = case event
-                when Event
-                  event
-                else
-                  Event.new(event)
-                end
-      integration.on_event(event)
+      event = convert_arguments(Event, event) { |event| Event.new(event) }
+      integration = convert_arguments(Base, integration) do |integration|
+        self.const_get(integration.capitalize).new(config)
+      end
+
+      integration.on_event(event) if integration.supports_event?(event.type)
+    end
+
+    private
+    def self.convert_arguments(klass, arg)
+      raise ArgumentError unless block_given?
+      if arg.is_a?(klass)
+        arg
+      else
+        yield arg
+      end
     end
   end
 end

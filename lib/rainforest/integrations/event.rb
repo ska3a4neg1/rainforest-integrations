@@ -13,8 +13,17 @@ module Rainforest
       ).freeze
 
       def initialize(type: , html: , text: , is_failure: )
-        raise ArgumentError unless TYPES.include?(type)
+        self.class.check_event!(type)
         @type, @html, @text, @is_failure = type, html, text, is_failure
+      end
+
+      def self.check_event!(*types)
+        types.each do |type|
+          unless TYPES.include?(type)
+            raise ArgumentError, "Expected #{type.inspect} to be one of #{TYPES.join(", ")}"
+          end
+
+        end
       end
 
       def to_html
