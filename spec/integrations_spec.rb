@@ -6,6 +6,7 @@ module Rainforest
           expect(event).to be_an(described_class::Event)
         end
         described_class.send_event :hipchat, event: {
+          type: "test_failure",
           text: "Some text",
           html: "Some html",
           is_failure: false,
