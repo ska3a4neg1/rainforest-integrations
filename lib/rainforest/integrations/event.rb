@@ -4,11 +4,11 @@ module Rainforest
       attr_reader :type
 
       TYPES = %w(
-        test_failure
-        test_success
         first_failure
         run_failure
         run_success
+        test_failure
+        test_success
         webhook_timeout
       ).freeze
 

@@ -15,14 +15,16 @@ module Rainforest
 
       def self.receive_events(*event_types)
         Event.check_event!(*event_types)
-        define_method :supports_event? do |event|
-          event_types.include?(event)
-        end
+        @supports_events = event_types
       end
 
       def supports_event?(event_type)
         Event.check_event!(event_type)
-        true
+        self.class.supported_events.include?(event_type)
+      end
+
+      def self.supported_events
+        @supports_events || Event::TYPES
       end
     end
   end
