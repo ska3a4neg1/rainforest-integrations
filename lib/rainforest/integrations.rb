@@ -1,5 +1,6 @@
 require "ostruct"
 require "httparty"
+require 'http/exceptions'
 require "rainforest/integrations/version"
 require "rainforest/integrations/base"
 require "rainforest/integrations/event"
