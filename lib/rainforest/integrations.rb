@@ -4,6 +4,7 @@ require 'http/exceptions'
 require "rainforest/integrations/version"
 require "rainforest/integrations/base"
 require "rainforest/integrations/event"
+require "rainforest/integrations/config/config"
 require "rainforest/integrations/http_integration"
 
 

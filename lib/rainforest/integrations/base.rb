@@ -9,8 +9,12 @@ module Rainforest
         OpenStruct.new(@config)
       end
 
-      def self.config
-        # Nothing for now, mostly serves as documentation
+      def self.config(&block)
+        if block_given?
+          @config = Config::Config.new(&block)
+        else
+          @config
+        end
       end
 
       def self.receive_events(*event_types)
@@ -25,6 +29,10 @@ module Rainforest
 
       def self.supported_events
         @supports_events || Event::TYPES
+      end
+
+      def self.valid_config?(config)
+        config.valid?(config)
       end
     end
   end
