@@ -22,4 +22,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake"
   spec.add_dependency "httparty", "~> 0.13"
   spec.add_dependency "http-exceptions"
+  spec.add_dependency "activesupport", ">= 3.0.0"
 end
