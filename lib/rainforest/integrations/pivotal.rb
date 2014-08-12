@@ -3,8 +3,6 @@ module Rainforest
     class Pivotal < Base
       include HttpIntegration
 
-      URL = "https://api.hipchat.com/v1/rooms/message".freeze
-
       config do
         string :pivotal_api_token
         string :pivotal_project_id
