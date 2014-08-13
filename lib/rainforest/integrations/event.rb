@@ -26,7 +26,7 @@ module Rainforest
         end
       end
 
-      def to_html(:long = false)
+      def to_html(long: false)
         long ? @long_html : @html
       end
 
