@@ -15,7 +15,7 @@ module Rainforest
 
         body = {
           name: event.to_text,
-          description: event.to_html,
+          description: event.to_html(long: true),
           story_type: 'bug',
           labels: [{name: 'rainforest'}]
         }.to_json

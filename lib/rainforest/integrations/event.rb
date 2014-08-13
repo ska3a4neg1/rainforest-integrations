@@ -12,9 +12,9 @@ module Rainforest
         webhook_timeout
       ).freeze
 
-      def initialize(type: , html: , text: , is_failure: )
+      def initialize(type: , html: , long_html:, text: , is_failure: )
         self.class.check_event!(type)
-        @type, @html, @text, @is_failure = type, html, text, is_failure
+        @type, @html, @long_html, @text, @is_failure = type, html, long_html, text, is_failure
       end
 
       def self.check_event!(*types)
@@ -26,8 +26,8 @@ module Rainforest
         end
       end
 
-      def to_html
-        @html
+      def to_html(:long = false)
+        long ? @long_html : @html
       end
 
       def to_text
