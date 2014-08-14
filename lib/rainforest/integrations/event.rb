@@ -12,7 +12,7 @@ module Rainforest
         webhook_timeout
       ).freeze
 
-      def initialize(type: , html: , long_html:, text: , is_failure: )
+      def initialize(type: , html: , long_html: html, text: , is_failure: )
         self.class.check_event!(type)
         @type, @html, @long_html, @text, @is_failure = type, html, long_html, text, is_failure
       end
