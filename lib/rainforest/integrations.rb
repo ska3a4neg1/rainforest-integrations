@@ -17,8 +17,9 @@ module Rainforest
       pivotal
     ).freeze
 
+    root = Pathname.new(File.dirname(__FILE__)).join("../..")
     INTEGRATIONS.each do |integration|
-      require "rainforest/integrations/#{integration}"
+      require root.join("integrations", integration)
     end
 
     # Your code goes here...
