@@ -7,6 +7,8 @@ require "rainforest/integrations/base"
 require "rainforest/integrations/event"
 require "rainforest/integrations/config/config"
 require "rainforest/integrations/http_integration"
+require "rainforest/integrations/html_renderer"
+require "rainforest/integrations/text_renderer"
 
 
 module Rainforest
