@@ -17,6 +17,7 @@ module Rainforest
       test_integration
       hipchat
       pivotal
+      slack
     ).freeze
 
     root = Pathname.new(File.dirname(__FILE__)).join("../..")

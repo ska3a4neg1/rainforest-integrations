@@ -33,7 +33,7 @@ module Rainforest
 
       def description(event)
         browser_result = event.browser_result
-        txt = %{The following errors were reported for you test '#{browser_result["failing_test"]["title"]}' (#{event.ui_link}) in #{browser_result["browser"]} for run #{browser_result["run_id"]}:\n\n}
+        txt = %{The following errors were reported for your test '#{browser_result["failing_test"]["title"]}' (#{event.ui_link}) in #{browser_result["browser"]} for run #{browser_result["run_id"]}:\n\n}
 
         browser_result["failing_test"]["steps"].each.with_index do |step, i|
           r = step["browsers"].first
