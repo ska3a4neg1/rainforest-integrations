@@ -1,3 +1,5 @@
+require 'active_support/core_ext/hash'
+
 module Rainforest
   module Integrations
     class Event
@@ -13,6 +15,7 @@ module Rainforest
       ).freeze
 
       def initialize(event_blob)
+        event_blob = event_blob.stringify_keys # QC gives them as symbols :(
         @name           = event_blob["name"]
         @run            = event_blob["run"]
         @browser_result = event_blob["browser_result"]
