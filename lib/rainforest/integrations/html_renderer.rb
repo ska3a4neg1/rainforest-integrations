@@ -21,23 +21,27 @@ module Rainforest::Integrations
 
     def error_html(event)
       <<-HTML.strip_heredoc
-        Your Rainforest run <a href="#{event.ui_link}">#{event.run["id"]}</a>
-        just errored: '#{event.run["error_messages"].join(". ")}'
+        Your Rainforest run #{link_to_run(event.run, event.ui_link)}
+        just errored: '#{event.run["error_reason"]}'
       HTML
     end
 
     def failure_html(event)
       <<-HTML.strip_heredoc
-        Your test '#{event.job_group["run_test"]["title"]}'
-        just failed in #{event["job_group"]["browser"]} -
+        Your test '#{event.browser_result["failing_test"]["title"]}'
+        just failed in #{event.browser_result["name"]} -
         <a href='#{event.ui_link}'>view the failure here</a>.
       HTML
     end
 
     def webhook_timeout_html(event)
       <<-HTML.strip_heredoc
-       Your Rainforest run #{event.run["id"]} timed out due to your webhook failing. If you need a hand debugging it, please let us know via email <a href="mailto:team@rainforestqa.com">team@rainforestqa.com</a>.
+       Your Rainforest run #{link_to_run(event.run, event.ui_link)} timed out due to your webhook failing. If you need a hand debugging it, please let us know via email <a href="mailto:team@rainforestqa.com">team@rainforestqa.com</a>.
       HTML
+    end
+
+    def link_to_run(run, href)
+      %{<a href="#{href}">#{run["id"]}</a>}
     end
   end
 end
