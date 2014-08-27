@@ -1,17 +1,12 @@
 module Rainforest
   module Integrations
     describe Event do
-      describe ".sample_event" do
-        subject { described_class.sample_event }
 
-        it "returns a correctly constructed sample event" do
-          expect(subject.to_html).to include("<")
-          expect(subject.to_html).to include(">")
-
-          expect(subject.to_text).to be_a(String)
-          expect(subject.failure?).to be(true)
-        end
+      it "should handle the sample payload" do
+        event = Event.new(sample_event_payload)
+        expect(event.name).to eq(sample_event_payload["name"])
       end
+
     end
   end
 end

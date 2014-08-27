@@ -7,6 +7,8 @@ require "rainforest/integrations/base"
 require "rainforest/integrations/event"
 require "rainforest/integrations/config/config"
 require "rainforest/integrations/http_integration"
+require "rainforest/integrations/html_renderer"
+require "rainforest/integrations/text_renderer"
 
 
 module Rainforest
@@ -17,8 +19,9 @@ module Rainforest
       pivotal
     ).freeze
 
+    root = Pathname.new(File.dirname(__FILE__)).join("../..")
     INTEGRATIONS.each do |integration|
-      require "rainforest/integrations/#{integration}"
+      require root.join("integrations", integration)
     end
 
     # Your code goes here...

@@ -12,7 +12,12 @@ module Rainforest
 
       it "posts to the Hipchat API" do
         stub_request(:post, described_class::URL)
-        subject.on_event Event.sample_event
+        subject.on_event sample_event
+      end
+
+      it "posts job failures to the Hipchat API" do
+        stub_request(:post, described_class::URL)
+        subject.on_event sample_job_failure_event
       end
     end
   end

@@ -2,6 +2,7 @@ module Rainforest
   module Integrations
     class Hipchat < Base
       include HttpIntegration
+      include HtmlRenderer
 
       URL = "https://api.hipchat.com/v1/rooms/message".freeze
 
@@ -11,7 +12,7 @@ module Rainforest
       end
 
       def on_event(event)
-        message = event.to_html
+        message = render_html(event)
         body = {
           room_id: config.hipchat_room,
           from: "Rainforest QA",

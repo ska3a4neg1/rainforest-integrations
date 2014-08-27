@@ -12,7 +12,7 @@ module Rainforest
 
       it "posts to the Pivotal API" do
         stub_request(:post, subject.url)
-        subject.on_event Event.sample_event
+        subject.on_event sample_job_failure_event
       end
     end
   end

@@ -1,14 +1,7 @@
 module Rainforest
   describe Integrations do
     describe ".send_event" do
-      let(:event) do
-        {
-          type: "test_failure",
-          text: "Some text",
-          html: "Some html",
-          is_failure: false,
-        }
-      end
+      let(:event) { sample_event }
 
       it "sends an event to a specific integration" do
         expect_any_instance_of(Integrations::Hipchat).to receive(:on_event) do |receiver, event|
@@ -26,8 +19,10 @@ module Rainforest
 
         it "only calls #on_event if the integrations cares about it" do
           expect(integration).to receive(:on_event).once
+          event = described_class::Event.new(sample_event_payload.merge("type" => "test_failure"))
           described_class.send_event integration, event: event, config: {}
-          described_class.send_event integration, event: event.merge(type: 'run_failure'), config: {}
+          event = described_class::Event.new(sample_event_payload.merge("type" => "run_failure"))
+          described_class.send_event integration, event: event, config: {}
         end
       end
     end
