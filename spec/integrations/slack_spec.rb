@@ -12,64 +12,58 @@ describe Rainforest::Integrations::Slack do
 
   it "posts to the Slack API" do
     stub_request(:post, subject.url)
-    subject.on_event event
+    integration.on_event event
   end
 
-  describe "payload" do
-    subject(:payload) { integration.render_event(event) }
+  context "of_text_failure" do
+    let(:event) { load_event_json("test_failure") }
 
-    describe "pretext field" do
-      subject(:pretext) { payload[:pretext] }
+    describe "message_text" do
+      subject(:text) { integration.message_text(event) }
 
-      it { should include "Errors were reported" }
+      it { should include "failed" }
 
       it "should include the failing test title" do
-        expect(pretext).to include "Switch to a pricing plan"
+        expect(text).to include "Switch to a pricing plan"
       end
 
       it "should include a link to the ui" do
-        expect(pretext).to include event.ui_link
+        expect(text).to include event.ui_link
       end
     end
 
-    describe "fields" do
-      subject(:fields) { payload[:fields] }
+    describe "attachments" do
+      subject(:attachments) { integration.attachments(event) }
 
-      it "should have an item for each failed step" do
-        expect(fields.size).to eq(1)
+      it "should have an attachment for each failed step" do
+        expect(attachments.size).to eq(1)
       end
 
-      describe "title" do
-        subject(:title) { fields.first[:title] }
+      describe "the attachment" do
+        subject(:attachment) { attachments.first }
 
-        it "should include the result of the step" do
-          expect(title).to include "failed"
+        describe ":text" do
+          subject(:text) { attachment[:text] }
+
+          it "should include the step number" do
+            expect(text).to include("Step #2")
+          end
+
+          it "should include the result" do
+            expect(text).to include "failed"
+          end
+
+          it "should include the truncated action" do
+            expect(text).to include "Locate a pricing plan that..."
+          end
+
+          it "should include the truncated expected response" do
+            expect(text).to include "Did you get a success message?"
+          end
         end
 
-        it "should include the title of the step" do
-          expect(title).to include "Locate a pricing plan"
-        end
-
-        it "should include the response of the step" do
-          expect(title).to include "Did you get a"
-        end
       end
 
-      describe "feedback" do
-        subject(:value) { fields.first[:value] }
-
-        it "should include the feedback" do
-          expect(value).to include "Getting error message"
-        end
-
-        it "should include the user agent" do
-          expect(value).to include "Mozilla"
-        end
-
-        it "should include a screenshot" do
-          expect(value).to include "Screenshot: https://s3.amazonaws.com/store.rainforestapp.com/"
-        end
-      end
     end
   end
 
