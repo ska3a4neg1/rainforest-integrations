@@ -3,6 +3,7 @@ require "httparty"
 require 'http/exceptions'
 require "active_support/inflector"
 require "rainforest/integrations/version"
+require "rainforest/integrations/exceptions"
 require "rainforest/integrations/base"
 require "rainforest/integrations/event"
 require "rainforest/integrations/config/config"

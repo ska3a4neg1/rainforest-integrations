@@ -18,7 +18,12 @@ module Rainforest
                  { text: render_text(event) }
                end
 
-        post url, body: body.to_json
+        response = post url, body: body.to_json
+        # Slack errors are still `200 OK`. For shame.
+        unless response.parsed_response["ok"]
+          msg = "Connection refused, invalid URL. (#{response.parsed_response["error"]})"
+          raise ConfigurationError.new(msg)
+        end
       end
 
       def message_text(event)

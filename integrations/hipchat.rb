@@ -23,6 +23,14 @@ module Rainforest
           auth_token: config.hipchat_token,
         }
         post URL, body: body
+      rescue Http::Exceptions::HttpException => ex
+        case ex.response.code
+        when 400..499
+          msg = ex.response.body["error"]["message"]
+          raise ConfigurationError.new(msg, original_exception: ex)
+        else
+          raise ex
+        end
       end
     end
   end

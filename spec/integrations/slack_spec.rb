@@ -7,11 +7,13 @@ describe Rainforest::Integrations::Slack do
   end
 
   let(:event) { load_event_json("test_failure") }
+  let(:response_body) { '{"ok": true}' }
+  let(:response) { {body: response_body, status: 200, headers: {"content-type"=>"application/json; charset=utf-8"}} }
 
   subject(:integration) { described_class.new config }
 
   it "posts to the Slack API" do
-    stub_request(:post, subject.url)
+    stub_request(:post, subject.url).to_return(response)
     integration.on_event event
   end
 
@@ -65,6 +67,20 @@ describe Rainforest::Integrations::Slack do
       end
 
     end
+  end
+
+  context "with an error response" do
+    let(:response_body) { '{ "ok": false, "error": "not_authed" }' }
+
+    it "should raise a ConfigurationError" do
+      stub_request(:post, subject.url).to_return(response)
+
+      expect {
+        subject.on_event event
+      }.to raise_error(Rainforest::Integrations::ConfigurationError)
+
+    end
+
   end
 
 end
