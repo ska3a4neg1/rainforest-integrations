@@ -78,7 +78,16 @@ describe Rainforest::Integrations::Slack do
       expect {
         subject.on_event event
       }.to raise_error(Rainforest::Integrations::ConfigurationError)
+    end
+  end
 
+  context "with a bogus URI" do
+    let(:config) { {slack_url: "bogus.slack.com"} }
+
+    it "shold raise a ConfigurationError" do
+      expect {
+        subject.on_event event
+      }.to raise_error(Rainforest::Integrations::ConfigurationError)
     end
 
   end
