@@ -24,6 +24,10 @@ module Rainforest
           msg = "Connection refused, invalid URL. (#{response.parsed_response["error"]})"
           raise ConfigurationError.new(msg)
         end
+
+      rescue URI::InvalidURIError => ex
+        msg = "Invalid URL. It should look like https://you.slack.com/services/hooks/incoming-webhook?token=xyz"
+        raise ConfigurationError.new(msg, ex)
       end
 
       def message_text(event)
