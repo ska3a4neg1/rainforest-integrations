@@ -55,12 +55,14 @@ module Rainforest
       def render_attachment(event, browser_result, step, idx)
         result = step["browsers"].first
 
+        color = (result == "failed" ? "#CF512E" : "#278D3F")
+
         text = "Step ##{idx+1} #{result["result"]}: #{truncate(step["action"])} - #{truncate(step["response"])}"
 
         {
           fallback: text,
           mrkdwn_in: ["fields"],
-          color: "#278d3f",
+          color: color,
           text: text,
           fields: result["feedback"].map.with_index do |feedback, idx|
             next unless feedback["note"].present?
