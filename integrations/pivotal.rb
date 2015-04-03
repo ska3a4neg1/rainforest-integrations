@@ -13,6 +13,8 @@ module Rainforest
       receive_events "test_failure"
 
       def on_event(event)
+        return if config.pivotal_api_token.empty? || config.pivotal_project_id.empty?
+
         body = {
           name: render_text(event),
           description: description(event),
@@ -52,5 +54,3 @@ module Rainforest
     end
   end
 end
-
-

@@ -11,6 +11,8 @@ module Rainforest
       end
 
       def on_event(event)
+        return if url.empty?
+
         body = if event.name == "of_test_failure"
                  { text: message_text(event),
                    attachments: attachments(event) }
@@ -103,4 +105,3 @@ module Rainforest
     end
   end
 end
-
