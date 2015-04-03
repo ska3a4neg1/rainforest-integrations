@@ -12,6 +12,8 @@ module Rainforest
       end
 
       def on_event(event)
+        return if config.hipchat_room.empty? || config.hipchat_token.empty?
+
         message = render_html(event)
         body = {
           room_id: config.hipchat_room,
@@ -35,4 +37,3 @@ module Rainforest
     end
   end
 end
-

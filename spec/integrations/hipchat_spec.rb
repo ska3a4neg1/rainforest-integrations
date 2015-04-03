@@ -33,6 +33,32 @@ module Rainforest
         end
 
       end
+
+      context 'when the room is blank' do
+        let(:config) do
+          {
+            hipchat_room: '',
+            hipchat_token: 'My Token'
+          }
+        end
+
+        it 'does nothing' do
+          expect { subject.on_event sample_event }.to_not raise_error
+        end
+      end
+
+      context 'when the API token is blank' do
+        let(:config) do
+          {
+            hipchat_room: 'My Room',
+            hipchat_token: ''
+          }
+        end
+
+        it 'does nothing' do
+          expect { subject.on_event sample_event }.to_not raise_error
+        end
+      end
     end
   end
 end

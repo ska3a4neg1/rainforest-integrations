@@ -92,5 +92,12 @@ describe Rainforest::Integrations::Slack do
 
   end
 
-end
+  context "with a blank URI" do
+    let(:config) { { slack_url: '' } }
 
+    it 'does nothing' do
+      expect { subject.on_event event }.to_not raise_error
+    end
+  end
+
+end
