@@ -22,11 +22,23 @@ module Rainforest
           labels: [{name: 'rainforest'}]
         }.to_json
 
-        post(url, body: body, headers: {
-          'Content-Type' => 'application/json',
-          'X-TrackerToken' => config.pivotal_api_token,
-          'User-Agent' => 'Rainforest QA'
-        })
+        begin
+          post(url, body: body, headers: {
+                 'Content-Type' => 'application/json',
+                 'X-TrackerToken' => config.pivotal_api_token,
+                 'User-Agent' => 'Rainforest QA'
+               })
+        rescue Http::Exceptions::HttpException => ex
+          case ex.response.code
+          when 403
+            msg = "#{ex.response.body['error']} Possible fix: #{ex.response.body['possible_fix']}"
+            raise ConfigurationError.new msg, original_exception: ex
+          when 400..499
+            raise ConfigurationError.new ex.response.body['error'], original_exception: ex
+          else
+            raise ex
+          end
+        end
       end
 
       def url
