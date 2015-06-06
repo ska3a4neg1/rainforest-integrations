@@ -34,8 +34,8 @@ describe Rainforest::Integrations::Slack do
       end
     end
 
-    describe "attachments" do
-      subject(:attachments) { integration.attachments(event) }
+    describe "failed_step_attachments" do
+      subject(:attachments) { integration.failed_step_attachments(event) }
 
       it "should have an attachment for each failed step" do
         expect(attachments.size).to eq(1)
