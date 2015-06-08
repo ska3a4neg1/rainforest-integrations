@@ -13,6 +13,12 @@ RSpec.configure do |config|
     Rainforest::Integrations::Event.new(sample_event_payload)
   end
 
+  def sample_success_event
+    payload = sample_event_payload
+    payload['is_failure'] = false
+    Rainforest::Integrations::Event.new(payload)
+  end
+
   def sample_job_failure_event
     Rainforest::Integrations::Event.new(sample_job_failure_event_payload)
   end
