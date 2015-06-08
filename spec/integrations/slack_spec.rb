@@ -34,8 +34,42 @@ describe Rainforest::Integrations::Slack do
       end
     end
 
-    describe "attachments" do
-      subject(:attachments) { integration.attachments(event) }
+    describe '#attachments' do
+      subject { integration.attachments(event) }
+
+      context 'for a run_failure event' do
+        let(:event) { load_event_json("run_error") }
+
+        it 'should only have one attachment' do
+          expect(subject.count).to eq 1
+        end
+
+        it 'should be colored red' do
+          expect(subject.first[:color]).to eq 'danger'
+        end
+      end
+
+      context 'for a of_run_completion event' do
+        context 'with a failure' do
+          let(:event) { sample_event }
+
+          it 'should be colored red' do
+            expect(subject.first[:color]).to eq 'danger'
+          end
+        end
+
+        context 'with a success' do
+          let(:event) { sample_success_event }
+
+          it 'should be colored green' do
+            expect(subject.first[:color]).to eq 'good'
+          end
+        end
+      end
+    end
+
+    describe "failed_step_attachments" do
+      subject(:attachments) { integration.failed_step_attachments(event) }
 
       it "should have an attachment for each failed step" do
         expect(attachments.size).to eq(1)

@@ -1,4 +1,5 @@
 require "active_support/core_ext/string/strip"
+require "active_support/core_ext/string/filters"
 
 module Rainforest
   module Integrations
@@ -15,9 +16,9 @@ module Rainforest
 
         body = if event.name == "of_test_failure"
                  { text: message_text(event),
-                   attachments: attachments(event) }
+                   attachments: failed_step_attachments(event) }
                else
-                 { text: render_text(event) }
+                 { attachments: attachments(event) }
                end
 
         response = post url, body: body.to_json
@@ -41,6 +42,19 @@ module Rainforest
       end
 
       def attachments(event)
+        text = render_text(event)
+        color = event.is_failure ? 'danger' : 'good'
+
+        [
+          {
+            text: text,
+            fallback: text,
+            color: color
+          }
+        ]
+      end
+
+      def failed_step_attachments(event)
         data = []
 
         browser_result = event.browser_result
@@ -57,7 +71,7 @@ module Rainforest
       def render_attachment(event, browser_result, step, idx)
         result = step["browsers"].first
 
-        color = (result == "failed" ? "#CF512E" : "#278D3F")
+        color = 'danger'
 
         text = "Step ##{idx+1} #{result["result"]}: #{truncate(step["action"])} - #{truncate(step["response"])}"
 
