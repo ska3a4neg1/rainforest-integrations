@@ -4,7 +4,7 @@ class EventsController < ApplicationController
   before_action :verify_signature
 
   def create
-    render json: { response: 'Ok' }, status: :created
+    render json: { status: 'ok' }, status: :created
   end
 
   private
@@ -15,7 +15,7 @@ class EventsController < ApplicationController
     hmac = OpenSSL::HMAC.hexdigest(digest, SIGNING_KEY, body_string)
 
     unless request.headers['X-SIGNATURE'] == hmac
-      render json: { response: 'Unauthorized' }, status: :unauthorized
+      render json: { status: 'unauthorized' }, status: :unauthorized
     end
   end
 end

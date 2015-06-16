@@ -26,6 +26,7 @@ RSpec.describe EventsController, type: :controller do
       it 'returns a 201' do
         post :create, payload
         expect(response.code).to eq '201'
+        expect(json['status']).to eq 'ok'
       end
     end
 
@@ -33,6 +34,7 @@ RSpec.describe EventsController, type: :controller do
       it 'returns a 401' do
         post :create, payload
         expect(response.code).to eq '401'
+        expect(json['status']).to eq 'unauthorized'
       end
     end
 
@@ -48,8 +50,12 @@ RSpec.describe EventsController, type: :controller do
     end
   end
 
-  def sign (payload, key)
+  def sign(payload, key)
     digest = OpenSSL::Digest.new('sha256')
     OpenSSL::HMAC.hexdigest(digest, key, payload)
+  end
+
+  def json
+    JSON.parse(response.body)
   end
 end
