@@ -12,8 +12,7 @@ RSpec.describe EventsController, type: :controller do
 
   let(:integrations) do
     [
-      { name: 'slack', settings: { foo: 'bar' } },
-      { name: 'hipchat', settings: { baz: 'qux' } }
+      { name: 'slack', settings: { foo: 'bar' } }
     ]
   end
 

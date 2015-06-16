@@ -14,7 +14,7 @@ class EventsController < ApplicationController
 
       Integrations.send_event(body)
       render json: { status: 'ok' }, status: :created
-    rescue MultiJson::ParseError
+    rescue MultiJson::ParseError, UnsupportedIntegrationError
       invalid_request
     end
   end
