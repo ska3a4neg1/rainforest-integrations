@@ -73,6 +73,16 @@ RSpec.describe EventsController, type: :controller do
           expect(response.code).to eq '400'
         end
       end
+
+      context 'with an unsupported integration' do
+        let(:integrations) { [{ name: 'yo', settings: {} }]}
+
+        it 'returns a 400 with a useful error message' do
+          post :create, payload
+          expect(response.code).to eq '400'
+          expect(json['error']).to eq "Integration 'yo' is not supported"
+        end
+      end
     end
 
     context 'without valid HMAC signature' do
