@@ -1,10 +1,16 @@
+require 'integrations'
+
 class EventsController < ApplicationController
   SIGNING_KEY = ENV.fetch('INTEGRATIONS_SIGNING_KEY').freeze
 
   before_action :verify_signature
 
   def create
-    render json: { status: 'ok' }, status: :created
+    begin
+      body = MultiJson.load(request.body.read, symbolize_keys: true)
+      Integrations.send_event(body)
+      render json: { status: 'ok' }, status: :created
+    end
   end
 
   private

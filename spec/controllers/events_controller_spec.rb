@@ -1,9 +1,29 @@
 require 'rails_helper'
 
 RSpec.describe EventsController, type: :controller do
+  let(:run_payload) do
+    {
+      run: {
+        id: 3,
+        status: 'failed'
+      }
+    }
+  end
+
+  let(:integrations) do
+    [
+      { name: 'slack', settings: { foo: 'bar' } },
+      { name: 'hipchat', settings: { baz: 'qux' } }
+    ]
+  end
+
+  let(:event_name) { 'something_happened' }
+
   let(:payload) do
     {
-      event_name: 'something'
+      event_name: event_name,
+      integrations: integrations,
+      payload: run_payload
     }.to_json
   end
 
@@ -27,6 +47,14 @@ RSpec.describe EventsController, type: :controller do
         post :create, payload
         expect(response.code).to eq '201'
         expect(json['status']).to eq 'ok'
+      end
+
+      it 'delegates to Integrations' do
+        expect(::Integrations).to receive(:send_event)
+                                   .with(event_name: event_name,
+                                         integrations: integrations,
+                                         payload: run_payload)
+        post :create, payload
       end
     end
 

@@ -193,6 +193,7 @@ DEPENDENCIES
   guard
   guard-rspec
   jbuilder (~> 2.0)
+  multi_json
   passenger
   rails (= 4.2.1)
   rspec-rails
