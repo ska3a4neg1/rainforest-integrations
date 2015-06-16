@@ -8,12 +8,22 @@ class EventsController < ApplicationController
   def create
     begin
       body = MultiJson.load(request.body.read, symbolize_keys: true)
+      unless %i(event_name integrations payload).all? { |key| body.key? key }
+        return invalid_request
+      end
+
       Integrations.send_event(body)
       render json: { status: 'ok' }, status: :created
+    rescue MultiJson::ParseError
+      invalid_request
     end
   end
 
   private
+
+  def invalid_request
+    render json: { status: 'invalid request' }, status: 400
+  end
 
   def verify_signature
     body_string = request.body.read

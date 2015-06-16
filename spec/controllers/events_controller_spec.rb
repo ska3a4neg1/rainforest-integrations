@@ -56,6 +56,24 @@ RSpec.describe EventsController, type: :controller do
                                          payload: run_payload)
         post :create, payload
       end
+
+      context 'with an unparseable JSON payload' do
+        let(:payload) { "I'm{invalid" }
+
+        it 'returns a 400' do
+          post :create, payload
+          expect(response.code).to eq '400'
+        end
+      end
+
+      context 'with invalid keys in the JSON request' do
+        let(:payload) { { foo: 'bar'}.to_json }
+
+        it 'returns a 400' do
+          post :create, payload
+          expect(response.code).to eq '400'
+        end
+      end
     end
 
     context 'without valid HMAC signature' do
