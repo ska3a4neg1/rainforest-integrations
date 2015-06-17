@@ -1,4 +1,5 @@
 require 'active_support/inflector'
+require 'event_validator'
 
 module Integrations
   INTEGRATIONS = %w(slack)
@@ -17,6 +18,8 @@ module Integrations
   end
 
   def self.send_event(event_name: , integrations: , payload: )
+    EventValidator.new(event_name, payload).validate!
+
     integrations.each do |integration|
       integration_name = INTEGRATIONS.find { |i| i == integration[:name] }
       raise UnsupportedIntegrationError, integration[:name] unless integration_name

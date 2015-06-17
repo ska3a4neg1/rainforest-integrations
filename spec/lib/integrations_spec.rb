@@ -3,13 +3,14 @@ require 'integrations'
 
 describe Integrations do
   describe '.send_event' do
-    let(:event_name) { 'run_failure' }
+    let(:event_name) { 'run_completion' }
     let(:payload) do
       {
         run: {
           id: 3,
           status: 'failed'
-        }
+        },
+        failed_tests: []
       }
     end
     let(:integrations) { [] }

@@ -6,7 +6,8 @@ RSpec.describe EventsController, type: :controller do
       run: {
         id: 3,
         status: 'failed'
-      }
+      },
+      failed_tests: []
     }
   end
 
@@ -16,7 +17,7 @@ RSpec.describe EventsController, type: :controller do
     ]
   end
 
-  let(:event_name) { 'something_happened' }
+  let(:event_name) { 'run_completion' }
 
   let(:payload) do
     {
@@ -66,7 +67,7 @@ RSpec.describe EventsController, type: :controller do
       end
 
       context 'with invalid keys in the JSON request' do
-        let(:payload) { { foo: 'bar'}.to_json }
+        let(:payload) { { foo: 'bar' }.to_json }
 
         it 'returns a 400' do
           post :create, payload
@@ -91,6 +92,29 @@ RSpec.describe EventsController, type: :controller do
           post :create, payload
           expect(response.code).to eq '400'
           expect(json['error']).to eq "Required setting 'url' was not supplied"
+        end
+      end
+
+      context 'with a valid event' do
+        before do
+          allow_any_instance_of(EventValidator).to receive(:validate!)
+        end
+
+        it 'returns a 201' do
+          post :create, payload
+          expect(response.code).to eq '201'
+        end
+      end
+
+      context 'with an invalid event' do
+        before do
+          allow_any_instance_of(EventValidator).to receive(:validate!)
+                                                    .and_raise EventValidator::InvalidPayloadError
+        end
+
+        it 'returns a 400' do
+          post :create, payload
+          expect(response.code).to eq '400'
         end
       end
     end
