@@ -1,11 +1,12 @@
-class Integrations::Slack
-  def initialize(event_name, payload, settings)
-    @event_name = event_name
-    @payload = payload
-    @settings = settings
+require 'integrations/base'
+
+class Integrations::Slack < Integrations::Base
+  def send_event
   end
 
-  def send_event
-    
+  private
+
+  def required_settings
+    %i(url)
   end
 end

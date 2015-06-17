@@ -18,6 +18,8 @@ class EventsController < ApplicationController
       invalid_request
     rescue Integrations::UnsupportedIntegrationError => e
       invalid_request e.message
+    rescue Integrations::MisconfiguredIntegrationError => e
+      invalid_request e.message
     end
   end
 

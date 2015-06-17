@@ -1,14 +1,20 @@
 require 'active_support/inflector'
 
-class Integrations
+module Integrations
+  INTEGRATIONS = %w(slack)
+  INTEGRATIONS.each { |i| require "integrations/#{i}" }
+
   class UnsupportedIntegrationError < StandardError
     def initialize(integration_name)
       super "Integration '#{integration_name}' is not supported"
     end
   end
 
-  INTEGRATIONS = %w(slack)
-  INTEGRATIONS.each { |i| require "integrations/#{i}" }
+  class MisconfiguredIntegrationError < StandardError
+    def initialize(setting)
+      super "Required setting '#{setting}' was not supplied"
+    end
+  end
 
   def self.send_event(event_name: , integrations: , payload: )
     integrations.each do |integration|
