@@ -20,7 +20,7 @@ describe Integrations do
     end
 
     context 'with an invalid integration' do
-      let(:integrations) { [{ name: 'yo', settings: {} }] }
+      let(:integrations) { [{ key: 'yo', settings: {} }] }
 
       it 'raises an UnsupportedIntegrationError' do
         expect { subject }.to raise_error(Integrations::UnsupportedIntegrationError)
@@ -28,7 +28,7 @@ describe Integrations do
     end
 
     context 'with a valid integration' do
-      let(:integrations) { [{ name: 'slack', settings: { foo: 'bar' } }] }
+      let(:integrations) { [{ key: 'slack', settings: { foo: 'bar' } }] }
 
       it 'calls the corresponding class for the integration' do
         mock_integration = double

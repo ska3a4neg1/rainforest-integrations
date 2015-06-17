@@ -21,8 +21,8 @@ module Integrations
     EventValidator.new(event_name, payload).validate!
 
     integrations.each do |integration|
-      integration_name = INTEGRATIONS.find { |i| i == integration[:name] }
-      raise UnsupportedIntegrationError, integration[:name] unless integration_name
+      integration_name = INTEGRATIONS.find { |i| i == integration[:key] }
+      raise UnsupportedIntegrationError, integration[:key] unless integration_name
 
       klass_name = "Integrations::#{integration_name.classify}".constantize
       integration_object = klass_name.new(event_name, payload, integration[:settings])

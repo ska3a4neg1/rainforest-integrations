@@ -13,7 +13,7 @@ RSpec.describe EventsController, type: :controller do
 
   let(:integrations) do
     [
-      { name: 'slack', settings: { url: 'https://example.com/fake_url' } }
+      { key: 'slack', settings: { url: 'https://example.com/fake_url' } }
     ]
   end
 
@@ -76,7 +76,7 @@ RSpec.describe EventsController, type: :controller do
       end
 
       context 'with an unsupported integration' do
-        let(:integrations) { [{ name: 'yo', settings: {} }]}
+        let(:integrations) { [{ key: 'yo', settings: {} }]}
 
         it 'returns a 400 with a useful error message' do
           post :create, payload
@@ -86,7 +86,7 @@ RSpec.describe EventsController, type: :controller do
       end
 
       context 'with a misconfigured integration' do
-        let(:integrations) { [{ name: 'slack', settings: {} }]}
+        let(:integrations) { [{ key: 'slack', settings: {} }]}
 
         it 'returns a 400 with a useful error message' do
           post :create, payload
