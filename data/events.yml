@@ -1,0 +1,15 @@
+---
+run_completion:
+  required_keys:
+    - run
+    - failed_tests
+run_error:
+  required_keys:
+    - run
+run_webhook_timeout:
+  required_keys:
+    - run
+run_test_failure:
+  required_keys:
+    - run
+    - failed_test
