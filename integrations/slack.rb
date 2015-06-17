@@ -93,16 +93,18 @@ module Rainforest
       # override the text helpers to use slack-flavored links
       def completion_text(event)
         run = event.run
-        "Your Rainforest Run #{run_link(run, event.ui_link)} #{run["result"]}"
+        time_to_finish = humanize_secs(run["stats"]['total_time_for_rainforest'])
+        "Your Rainforest Run #{run_link(run, event.ui_link)} #{run["result"]}. Time to finish: #{time_to_finish}"
       end
 
       def error_text(event)
         run = event.run
-        "Your Rainforest Run #{run_link(run, event.ui_link)} errored: #{run["error_reason"].inspect}"
+        time_to_finish = humanize_secs(run["stats"]['total_time_for_rainforest'])
+        "Your Rainforest Run #{run_link(run, event.ui_link)} errored: #{run["error_reason"].inspect}. Time to finish: #{time_to_finish}"
       end
 
       def webhook_timeout_text(event)
-       "Your Rainforest run #{run_link(event.run, event.ui_link)} timed out due to your webhook failing. If you need a hand debugging it, please let us know via email at team@rainforestqa.com."
+         "Your Rainforest run #{run_link(event.run, event.ui_link)} timed out due to your webhook failing. If you need a hand debugging it, please let us know via email at team@rainforestqa.com."
       end
 
       def run_link(run, href)
@@ -115,6 +117,16 @@ module Rainforest
 
       def url
         config.slack_url
+      end
+
+      def humanize_secs secs
+        secs = secs.to_i
+        [[60, :seconds], [60, :minutes], [24, :hours], [1000, :days]].map{ |count, name|
+          if secs > 0
+            secs, n = secs.divmod(count)
+            "#{n.to_i} #{name}"
+          end
+        }.compact.reverse.join(' ')
       end
     end
   end
