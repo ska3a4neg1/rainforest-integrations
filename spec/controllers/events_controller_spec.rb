@@ -41,12 +41,11 @@ describe EventsController, type: :controller do
     context "with a valid HMAC signature" do
       before do
         @request.headers['X-SIGNATURE'] = sign(payload, key)
+        allow(Integrations).to receive(:send_event) { 201 }
       end
 
       it 'returns a 201' do
-        VCR.use_cassette('event_controller_post_create_valid_hmac_sig') do
-          post :create, payload
-        end
+        post :create, payload
         expect(response.code).to eq '201'
         expect(json['status']).to eq 'ok'
       end
@@ -60,6 +59,10 @@ describe EventsController, type: :controller do
       end
 
       context 'with an unparseable JSON payload' do
+        before do
+          allow(Integrations).to receive(:send_event) { 400 }
+        end
+
         let(:payload) { "I'm{invalid" }
 
         it 'returns a 400' do
@@ -69,6 +72,10 @@ describe EventsController, type: :controller do
       end
 
       context 'with invalid keys in the JSON request' do
+        before do
+          allow(Integrations).to receive(:send_event).and_raise EventValidator::InvalidPayloadError
+        end
+
         let(:payload) { { foo: 'bar' }.to_json }
 
         it 'returns a 400' do
@@ -78,6 +85,10 @@ describe EventsController, type: :controller do
       end
 
       context 'with an unsupported integration' do
+        before do
+          allow(Integrations).to receive(:send_event).and_raise Integrations::UnsupportedIntegrationError.new('yo')
+        end
+
         let(:integrations) { [{ key: 'yo', settings: {} }]}
 
         it 'returns a 400 with a useful error message' do
@@ -88,7 +99,9 @@ describe EventsController, type: :controller do
       end
 
       context 'with a misconfigured integration' do
-        let(:integrations) { [{ key: 'slack', settings: {} }]}
+        before do
+          allow(Integrations).to receive(:send_event).and_raise Integrations::MisconfiguredIntegrationError.new(:url)
+        end
 
         it 'returns a 400 with a useful error message' do
           post :create, payload
@@ -103,17 +116,14 @@ describe EventsController, type: :controller do
         end
 
         it 'returns a 201' do
-          VCR.use_cassette('event_controller_post_create_valid_event') do
-            post :create, payload
-          end
+          post :create, payload
           expect(response.code).to eq '201'
         end
       end
 
       context 'with an invalid event' do
         before do
-          allow_any_instance_of(EventValidator).to receive(:validate!)
-                                                    .and_raise EventValidator::InvalidPayloadError
+          allow(Integrations).to receive(:send_event).and_raise EventValidator::InvalidPayloadError
         end
 
         it 'returns a 400' do
@@ -124,6 +134,10 @@ describe EventsController, type: :controller do
     end
 
     context 'without valid HMAC signature' do
+      before do
+        allow(Integrations).to receive(:send_event) { 401 }
+      end
+
       it 'returns a 401' do
         post :create, payload
         expect(response.code).to eq '401'
