@@ -1,12 +1,12 @@
 require 'integrations/base'
 
-class Integrations::Slack < Integrations::Base
-  def send_event
-  end
+module Integrations
+  class Slack < Base
+    def self.key
+      'slack'
+    end
 
-  private
-
-  def required_settings
-    %i(url)
+    def send_event
+    end
   end
 end
