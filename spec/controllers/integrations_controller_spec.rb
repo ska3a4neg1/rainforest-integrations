@@ -23,7 +23,7 @@ describe IntegrationsController, type: :controller do
 
         expect(body['title']).to eq 'Slack'
         expect(body['key']).to eq 'slack'
-        expect(body).to have_key 'keys'
+        expect(body).to have_key 'settings'
       end
     end
 
