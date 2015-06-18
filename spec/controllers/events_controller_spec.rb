@@ -95,6 +95,7 @@ describe EventsController, type: :controller do
           post :create, payload
           expect(response.code).to eq '400'
           expect(json['error']).to eq "Integration 'yo' is not supported"
+          expect(json['type']).to eq 'unsupported_integration'
         end
       end
 
@@ -107,6 +108,7 @@ describe EventsController, type: :controller do
           post :create, payload
           expect(response.code).to eq '400'
           expect(json['error']).to eq "Required setting 'url' was not supplied"
+          expect(json['type']).to eq 'misconfigured_integration'
         end
       end
 

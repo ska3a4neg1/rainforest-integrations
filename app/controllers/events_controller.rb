@@ -18,18 +18,18 @@ class EventsController < ApplicationController
     rescue MultiJson::ParseError
       invalid_request
     rescue Integrations::UnsupportedIntegrationError => e
-      invalid_request e.message
+      invalid_request e.message, type: 'unsupported_integration'
     rescue Integrations::MisconfiguredIntegrationError => e
-      invalid_request e.message
+      invalid_request e.message, type: 'misconfigured_integration'
     rescue EventValidator::InvalidPayloadError => e
-      invalid_request e.message
+      invalid_request e.message, type: 'misconfigured_integration'
     end
   end
 
   private
 
-  def invalid_request(message = 'invalid request')
-    render json: { error: message }, status: 400
+  def invalid_request(message = 'invalid request', type: 'invalid_request')
+    render json: { error: message, type: type }, status: 400
   end
 
   def verify_signature
