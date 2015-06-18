@@ -1,0 +1,5 @@
+---
+slack:
+  title: 'Slack'
+  settings:
+    - { key: 'url', title: 'Slack URL', required: true }

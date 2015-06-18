@@ -67,19 +67,10 @@ Events come with a payload that is specific to the event. The
 following events are currently supported, with the corresponding keys
 in the payload:
 
-
-#### `run_completion`
-Keys: run, failed_tests
-
-#### `run_error`
-Keys: run
-
-#### `run_webhook_timeout`
-Keys: run
-
-#### `run_test_failure`
-Keys: run, failed_test
-
+<% @events.each do |event_name, event_data| %>
+#### `<%= event_name %>`
+Keys: <%= event_data['required_keys'].join(', ') %>
+<% end %>
 
 The actual objects are similar to the objects returned in the
 Rainforest API, and will be fully documented once the format has been
