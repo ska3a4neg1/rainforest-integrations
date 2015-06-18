@@ -1,3 +1,5 @@
+require 'integrations'
+
 class Integrations::Base
   attr_reader :event_name, :payload, :settings
 
@@ -6,6 +8,10 @@ class Integrations::Base
     @event_name = event_name
     @payload = payload
     @settings = settings
+  end
+
+  def send_event
+    raise 'send_event must be defined in the child class'
   end
 
   protected
@@ -20,9 +26,5 @@ class Integrations::Base
         raise Integrations::MisconfiguredIntegrationError, setting
       end
     end
-  end
-
-  def send_event
-    raise 'send_event must be defined in the child class'
   end
 end
