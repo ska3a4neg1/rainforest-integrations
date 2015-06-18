@@ -11,7 +11,7 @@ describe Integration do
         expect(subject).to be_a Hash
         expect(subject['key']).to eq 'slack'
         expect(subject['title']).to eq 'Slack'
-        expect(subject['keys'].first).to eq({
+        expect(subject['settings'].first).to eq({
                                                        'title' => 'Slack URL',
                                                        'key' => 'url',
                                                        'required' => true
@@ -45,15 +45,15 @@ describe Integration do
   describe '.all' do
     let(:all_integrations) do
       {
-        'slack' => { 'title' => 'Slack', 'keys' => [] },
-        'hipchat' => { 'title' => 'HipChat', 'keys' => [] }
+        'slack' => { 'title' => 'Slack', 'settings' => [] },
+        'hipchat' => { 'title' => 'HipChat', 'settings' => [] }
       }
     end
 
     let(:expected_result) do
       [
-        { 'key' => 'slack', 'title' => 'Slack', 'keys' => [] },
-        { 'key' => 'hipchat', 'title' => 'HipChat', 'keys' => [] }
+        { 'key' => 'slack', 'title' => 'Slack', 'settings' => [] },
+        { 'key' => 'hipchat', 'title' => 'HipChat', 'settings' => [] }
       ]
     end
 
