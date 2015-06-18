@@ -1,0 +1,12 @@
+deployment:
+  staging:
+    branch: develop
+    commands:
+      - git fetch --unshallow
+      - git push -f git@heroku.com:rnfrst-integrations-stg.git $CIRCLE_SHA1:master
+
+  production:
+    branch: master
+    commands:
+      - git fetch --unshallow
+      - git push -f git@heroku.com:rnfrst-integrations-prd.git $CIRCLE_SHA1:master
