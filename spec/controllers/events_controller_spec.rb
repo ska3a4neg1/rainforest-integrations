@@ -44,7 +44,9 @@ describe EventsController, type: :controller do
       end
 
       it 'returns a 201' do
-        post :create, payload
+        VCR.use_cassette('event_controller_post_create_valid_hmac_sig') do
+          post :create, payload
+        end
         expect(response.code).to eq '201'
         expect(json['status']).to eq 'ok'
       end
@@ -101,7 +103,9 @@ describe EventsController, type: :controller do
         end
 
         it 'returns a 201' do
-          post :create, payload
+          VCR.use_cassette('event_controller_post_create_valid_event') do
+            post :create, payload
+          end
           expect(response.code).to eq '201'
         end
       end

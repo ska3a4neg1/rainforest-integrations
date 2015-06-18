@@ -1,5 +1,6 @@
 require 'simplecov'
 require 'rspec-rails'
+require 'vcr'
 SimpleCov.start
 
 RSpec.configure do |config|
@@ -13,4 +14,9 @@ RSpec.configure do |config|
 
   config.order = :random
   Kernel.srand config.seed
+end
+
+VCR.configure do |config|
+  config.cassette_library_dir = 'fixtures/vcr_cassettes'
+  config.hook_into :webmock
 end
