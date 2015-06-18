@@ -84,3 +84,26 @@ Keys: run, failed_test
 The actual objects are similar to the objects returned in the
 Rainforest API, and will be fully documented once the format has been
 completely specified.
+
+## Adding integrations
+There are two steps to adding a new integration:
+
+1. Add an integration class to the `lib/integrations` directory. This
+   should inherit from the `Integrations::Base` class and should
+   overwrite the `send_event` method. If the integration post is
+   unsuccessful, you should raise one of the following errors:
+   `Integrations::UserConfigurationError` for user configuration
+   problems (such as invalid credentials);
+   `Integrations::MisconfiguredIntegrationError` for non-user problems
+   in the integrations data from Rainforest; and `Integrations::Error`
+   for all other problems.
+2. Edit `data/integrations.yml` to add your integration (including the
+   appropriate values for `title` and `settings`).
+
+## Contributing
+1. Fork it ( https://github.com/[my-github-username]/rainforest-integrations/fork )
+2. Create your feature branch (git checkout -b my-new-feature)
+3. Generate this README by running `rake doc`
+4. Commit your changes (git commit -am 'Add some feature')
+5. Push to the branch (git push origin my-new-feature)
+6. Create a new Pull Request
