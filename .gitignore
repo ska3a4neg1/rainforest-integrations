@@ -12,3 +12,7 @@
 !/log/.keep
 /tmp
 /coverage/
+
+# Sublime project files
+*.sublime-project
+*.sublime-workspace
