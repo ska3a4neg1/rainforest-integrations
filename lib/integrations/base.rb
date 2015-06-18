@@ -1,4 +1,5 @@
 require 'integrations'
+require "httparty"
 
 class Integrations::Base
   attr_reader :event_name, :payload, :settings
