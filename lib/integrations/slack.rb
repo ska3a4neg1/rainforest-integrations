@@ -43,10 +43,6 @@ module Integrations
       }
     end
 
-    def required_settings
-      %i(url)
-    end
-
     def url
       settings[:url]
     end
