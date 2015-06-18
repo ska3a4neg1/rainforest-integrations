@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe EventsController, type: :controller do
+describe EventsController, type: :controller do
   let(:run_payload) do
     {
       run: {

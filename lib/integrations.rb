@@ -2,8 +2,7 @@ require 'active_support/inflector'
 require 'event_validator'
 
 module Integrations
-  INTEGRATIONS = %w(slack)
-  INTEGRATIONS.each { |i| require "integrations/#{i}" }
+  Integration.supported_integrations.each { |i| require "integrations/#{i}" }
 
   class UnsupportedIntegrationError < StandardError
     def initialize(integration_name)
@@ -21,8 +20,8 @@ module Integrations
     EventValidator.new(event_name, payload).validate!
 
     integrations.each do |integration|
-      integration_name = INTEGRATIONS.find { |i| i == integration[:key] }
-      raise UnsupportedIntegrationError, integration[:key] unless integration_name
+      integration_name = integration[:key]
+      raise UnsupportedIntegrationError, integration_name unless Integration.exists? integration_name
 
       klass_name = "Integrations::#{integration_name.classify}".constantize
       integration_object = klass_name.new(event_name, payload, integration[:settings])
