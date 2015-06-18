@@ -11,9 +11,6 @@ module Integrations
   end
 
   class MisconfiguredIntegrationError < StandardError
-    def initialize(setting)
-      super "Required setting '#{setting}' was not supplied"
-    end
   end
 
   def self.send_event(event_name: , integrations: , payload: )

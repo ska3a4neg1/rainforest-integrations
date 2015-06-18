@@ -33,7 +33,7 @@ module Integrations
     def validate_settings(settings)
       self.class.required_settings.each do |setting|
         unless settings.key? setting
-          raise Integrations::MisconfiguredIntegrationError, setting
+          raise Integrations::MisconfiguredIntegrationError, "Required setting '#{setting}' was not supplied"
         end
       end
     end

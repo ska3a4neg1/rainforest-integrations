@@ -95,18 +95,20 @@ describe EventsController, type: :controller do
           post :create, payload
           expect(response.code).to eq '400'
           expect(json['error']).to eq "Integration 'yo' is not supported"
+          expect(json['type']).to eq 'unsupported_integration'
         end
       end
 
       context 'with a misconfigured integration' do
         before do
-          allow(Integrations).to receive(:send_event).and_raise Integrations::MisconfiguredIntegrationError.new(:url)
+          allow(Integrations).to receive(:send_event).and_raise Integrations::MisconfiguredIntegrationError.new('ERROR!')
         end
 
         it 'returns a 400 with a useful error message' do
           post :create, payload
           expect(response.code).to eq '400'
-          expect(json['error']).to eq "Required setting 'url' was not supplied"
+          expect(json['error']).to eq 'ERROR!'
+          expect(json['type']).to eq 'misconfigured_integration'
         end
       end
 
