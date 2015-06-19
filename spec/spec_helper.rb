@@ -1,5 +1,4 @@
 require 'simplecov'
-require 'rspec-rails'
 require 'webmock/rspec'
 require 'vcr'
 
