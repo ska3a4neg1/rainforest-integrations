@@ -17,6 +17,20 @@ describe Rainforest::Integrations::Slack do
     integration.on_event event
   end
 
+  describe '#completion_text' do
+    it 'includes the duration of the run' do
+      expect( integration.completion_text(event) ).to eq 'Your Rainforest Run <http://app.rainforest.dev/runs/11388|#11388> failed. Time to finish: 32 minutes 51 seconds'
+    end
+  end
+
+  describe '#error_text' do
+    let(:event) { load_event_json("run_error") }
+
+    it 'includes the duration of the run' do
+      expect( integration.error_text(event) ).to include 'Time to finish: 6 hours 36 minutes 44 seconds'
+    end
+  end
+
   context "of_text_failure" do
     let(:event) { load_event_json("test_failure") }
 
