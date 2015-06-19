@@ -13,6 +13,9 @@ module Integrations
   class MisconfiguredIntegrationError < StandardError
   end
 
+  class UserConfigurationError < StandardError
+  end
+
   def self.send_event(event_name: , integrations: , payload: )
     EventValidator.new(event_name, payload).validate!
 
