@@ -34,10 +34,10 @@ module Integrations
 
     def message_text
       {
-        'run_completion' => "Run #{@payload[:id]} completed",
-        'run_error' => "Run #{@payload[:id]} error",
-        'run_webhook_timeout' => "Webhook of run #{@payload[:id]} timed out",
-        'run_test_failure' => "Run test #{@payload[:id]} failed",
+        'run_completion' => "<#{payload[:frontend_url]}|Run #{payload[:id]}> completed.",
+        'run_error' => "Error in <#{payload[:frontend_url]}|run #{payload[:id]}>",
+        'run_webhook_timeout' => "Webhook of run <#{payload[:frontend_url]}|#{payload[:id]}> timed out",
+        'run_test_failure' => "<#{payload[:frontend_url]}|Test #{payload[:id]}> failed!"
       }
     end
 
