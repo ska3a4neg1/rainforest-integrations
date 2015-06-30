@@ -113,6 +113,8 @@ module Rainforest
         unless event.run["description"].nil? or event.run["description"].empty?
           text += " (#{event.run["description"]})"
         end
+
+        return text
       end
 
       def run_link(run, href)
