@@ -15,14 +15,14 @@ module Rainforest::Integrations
     def completion_text(event)
       run = event.run
       <<-TEXT.strip_heredoc
-        Your Rainforest run [#{run["id"]}](#{event.ui_link}) #{run["result"]}.
+        Your Rainforest run [#{run["id"]}](#{event.ui_link}#{run_description(event.run)}) #{run["result"]}.
       TEXT
     end
 
     def error_text(event)
       run = event.run
       <<-TEXT.strip_heredoc
-        Your Rainforest run [#{run["id"]}](#{event.ui_link}) just errored: '#{run["error_reason"]}'
+        Your Rainforest run [#{run["id"]}](#{event.ui_link}#{run_description(event.run)}) just errored: '#{run["error_reason"]}'
       TEXT
     end
 
@@ -37,9 +37,14 @@ module Rainforest::Integrations
     def webhook_timeout_text(event)
       run = event.run
       <<-TEXT.strip_heredoc
-        Your Rainforest run [#{run["id"]}](#{event.ui_link}) timed out due to your webhook failing. If you need a hand debugging it, please let us know via email at team@rainforestqa.com
+        Your Rainforest run [#{run["id"]}](#{event.ui_link}#{run_description(event.run)}) timed out due to your webhook failing. If you need a hand debugging it, please let us know via email at team@rainforestqa.com
       TEXT
     end
 
+    def run_description(run)
+      unless run["description"].nil? or run["description"].empty?
+        %{ (run["description"])}
+      end
+    end
   end
 end
