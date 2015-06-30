@@ -1,0 +1,64 @@
+
+
+Started GET "/" for ::1 at 2015-06-18 11:27:34 -0700
+Processing by Rails::WelcomeController#index as HTML
+  Rendered /Users/nxvl/.rvm/gems/ruby-2.1.2@rainforest-integrations/gems/railties-4.2.1/lib/rails/templates/rails/welcome/index.html.erb (3.4ms)
+Completed 200 OK in 16ms (Views: 15.6ms)
+
+
+Started GET "/integrations" for ::1 at 2015-06-18 11:27:39 -0700
+Processing by IntegrationsController#index as HTML
+Completed 200 OK in 7ms (Views: 1.7ms)
+
+
+Started GET "/" for ::1 at 2015-06-18 11:42:21 -0700
+Processing by Rails::WelcomeController#index as HTML
+  Rendered /Users/nxvl/.rvm/gems/ruby-2.1.2@rainforest-integrations/gems/railties-4.2.1/lib/rails/templates/rails/welcome/index.html.erb (0.5ms)
+Completed 200 OK in 16ms (Views: 12.3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2015-06-19 15:06:31 -0700
+Processing by Rails::WelcomeController#index as HTML
+  Rendered /Users/nxvl/.rvm/gems/ruby-2.1.2@rainforest-integrations/gems/railties-4.2.1/lib/rails/templates/rails/welcome/index.html.erb (3.0ms)
+Completed 200 OK in 20ms (Views: 20.3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2015-06-19 15:07:15 -0700
+Processing by Rails::WelcomeController#index as HTML
+  Rendered /Users/nxvl/.rvm/gems/ruby-2.1.2@rainforest-integrations/gems/railties-4.2.1/lib/rails/templates/rails/welcome/index.html.erb (0.1ms)
+Completed 200 OK in 3ms (Views: 3.1ms)
+
+
+Started GET "/integrations" for 127.0.0.1 at 2015-06-19 15:07:43 -0700
+Processing by IntegrationsController#index as */*
+Completed 200 OK in 5ms (Views: 0.2ms)
+
+
+Started GET "/integrations/" for 127.0.0.1 at 2015-06-19 15:48:36 -0700
+Processing by IntegrationsController#index as HTML
+Completed 200 OK in 4ms (Views: 0.3ms)
+
+
+Started GET "/integrations" for 127.0.0.1 at 2015-06-19 16:01:52 -0700
+Processing by IntegrationsController#index as */*
+Completed 200 OK in 2ms (Views: 1.5ms)
+
+
+Started GET "/integrations" for 127.0.0.1 at 2015-06-19 16:01:52 -0700
+Processing by IntegrationsController#index as */*
+Completed 200 OK in 0ms (Views: 0.2ms)
+
+
+Started GET "/integrations" for 127.0.0.1 at 2015-06-19 16:21:40 -0700
+Processing by IntegrationsController#index as */*
+Completed 200 OK in 5ms (Views: 0.2ms)
+
+
+Started GET "/integrations" for 127.0.0.1 at 2015-06-19 16:21:41 -0700
+Processing by IntegrationsController#index as */*
+Completed 200 OK in 0ms (Views: 0.1ms)
+
+
+Started GET "/integrations" for 127.0.0.1 at 2015-06-20 23:42:21 -0500
+Processing by IntegrationsController#index as */*
+Completed 200 OK in 5ms (Views: 0.3ms)
