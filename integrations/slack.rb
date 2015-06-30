@@ -94,17 +94,25 @@ module Rainforest
       def completion_text(event)
         run = event.run
         time_to_finish = humanize_secs(run["stats"]['total_time_for_rainforest'])
-        "Your Rainforest Run #{run_link(run, event.ui_link)} #{run["result"]}. Time to finish: #{time_to_finish}"
+        "Your Rainforest Run #{run_details(event)} #{run["result"]}. Time to finish: #{time_to_finish}"
       end
 
       def error_text(event)
         run = event.run
         time_to_finish = humanize_secs(run["stats"]['total_time_for_rainforest'])
-        "Your Rainforest Run #{run_link(run, event.ui_link)} errored: #{run["error_reason"].inspect}. Time to finish: #{time_to_finish}"
+        "Your Rainforest Run #{run_details(event)} errored: #{run["error_reason"].inspect}. Time to finish: #{time_to_finish}"
       end
 
       def webhook_timeout_text(event)
-         "Your Rainforest run #{run_link(event.run, event.ui_link)} timed out due to your webhook failing. If you need a hand debugging it, please let us know via email at team@rainforestqa.com."
+         "Your Rainforest run #{run_details(event)} timed out due to your webhook failing. If you need a hand debugging it, please let us know via email at team@rainforestqa.com."
+      end
+
+      def run_details(event)
+        text = "#{run_link(event.run, event.ui_link)}"
+
+        unless event.run["description"].nil? or event.run["description"].empty?
+          text += " (#{event.run["description"]})"
+        end
       end
 
       def run_link(run, href)
