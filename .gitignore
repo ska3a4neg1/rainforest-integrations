@@ -21,3 +21,5 @@ tmp
 *.a
 mkmf.log
 tags
+log/
+.powrc

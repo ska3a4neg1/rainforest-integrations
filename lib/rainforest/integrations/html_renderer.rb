@@ -14,14 +14,14 @@ module Rainforest::Integrations
 
     def completion_html(event)
       <<-HTML.strip_heredoc
-        Your Rainforest Run #{event.run["id"]} #{event.run["result"]} -
+        Your Rainforest Run #{event.run["id"]}#{run_description(event.run)} #{event.run["result"]} -
           <a href="#{event.ui_link}">view the results here</a>
       HTML
     end
 
     def error_html(event)
       <<-HTML.strip_heredoc
-        Your Rainforest run #{link_to_run(event.run, event.ui_link)}
+        Your Rainforest run #{link_to_run(event.run, event.ui_link)}#{run_description(event.run)}
         just errored: '#{event.run["error_reason"]}'
       HTML
     end
@@ -36,13 +36,18 @@ module Rainforest::Integrations
 
     def webhook_timeout_html(event)
       <<-HTML.strip_heredoc
-       Your Rainforest run #{link_to_run(event.run, event.ui_link)} timed out due to your webhook failing. If you need a hand debugging it, please let us know via email <a href="mailto:team@rainforestqa.com">team@rainforestqa.com</a>.
+       Your Rainforest run #{link_to_run(event.run, event.ui_link)}#{run_description(event.run)} timed out due to your webhook failing. If you need a hand debugging it, please let us know via email <a href="mailto:team@rainforestqa.com">team@rainforestqa.com</a>.
       HTML
     end
 
     def link_to_run(run, href)
       %{<a href="#{href}">#{run["id"]}</a>}
     end
+
+    def run_description(run)
+      unless run["description"].nil? or run["description"].empty?
+        %{ (run["description"])}
+      end
+    end
   end
 end
-
