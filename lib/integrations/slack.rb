@@ -31,7 +31,7 @@ module Integrations
     end
 
     def message_color
-      return 'danger' if payload[:run][:status] == 'failed'
+      return 'danger' if payload[:run] && payload[:run][:status] == 'failed'
 
       color_hash = {
         'run_completion' => "good",
