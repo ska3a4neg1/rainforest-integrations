@@ -13,7 +13,7 @@ module Integrations
           :attachments => [{
             :text => message_text[event_name],
             :fallback => message_text[event_name],
-            :color => message_color[event_name]
+            :color => message_color
           }]
         }.to_json,
         :headers => {
@@ -30,6 +30,19 @@ module Integrations
       end
     end
 
+    def message_color
+      return 'danger' if payload[:run][:status] == 'failed'
+
+      color_hash = {
+        'run_completion' => "good",
+        'run_error' => "danger",
+        'run_webhook_timeout' => "danger",
+        'run_test_failure' => "danger",
+      }
+
+      color_hash[event_name]
+    end
+
     private
 
     def message_text
@@ -38,15 +51,6 @@ module Integrations
         'run_error' => "Error in <#{payload[:frontend_url]}|run #{payload[:id]}>",
         'run_webhook_timeout' => "Webhook of run <#{payload[:frontend_url]}|#{payload[:id]}> timed out",
         'run_test_failure' => "<#{payload[:frontend_url]}|Test #{payload[:id]}> failed!"
-      }
-    end
-
-    def message_color
-      {
-        'run_completion' => "good",
-        'run_error' => "danger",
-        'run_webhook_timeout' => "danger",
-        'run_test_failure' => "danger",
       }
     end
 
