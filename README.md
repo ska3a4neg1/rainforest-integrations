@@ -104,7 +104,7 @@ There are two steps to adding a new integration:
 
 1. Clone this repository
 2. `bundle install`
-3. You need to set the environment variable `INTEGRATION_SENTRY_DNS` (no default included due to the public nature of this project)
+3. You need to set the environment variable `INTEGRATION_SENTRY_DSN` (no default included due to the public nature of this project)
 4. `rails s`
 
 ## Contributing
