@@ -157,6 +157,19 @@ describe EventsController, type: :controller do
         expect(response.code).to eq '401'
       end
     end
+
+    context 'in development, without a X-SIGNATURE', :vcr do
+      before do
+        allow(Rails.env).to receive(:development?).and_return(true)
+        allow(Integrations).to receive(:send_event) { 201 }
+      end
+
+      it 'works' do
+        post :create, payload
+        expect(response.code).to eq '201'
+        expect(json['status']).to eq 'ok'
+      end
+    end
   end
 
   def sign(payload, key)
