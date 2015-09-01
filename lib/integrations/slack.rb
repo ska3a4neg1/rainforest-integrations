@@ -46,11 +46,11 @@ module Integrations
     private
 
     def message_text
+      description = run[:description].nil? ? '' : "(#{run[:description]}) "
       {
-
-        'run_completion' => "Your Rainforest Run <#{payload[:frontend_url]}|##{payload[:id]}> #{run[:status]}.",
-        'run_error' => "Your Rainforest Run <#{payload[:frontend_url]}|##{payload[:id]}> errored: #{run[:error_reason]}.",
-        'run_webhook_timeout' => "Your Rainforest run <#{payload[:frontend_url]}|##{payload[:id]}> timed out due to your webhook failing. If you need a hand debugging it, please let us know via email at team@rainforestqa.com.",
+        'run_completion' => "Your Rainforest Run <#{payload[:frontend_url]}|##{payload[:id]}> #{description}#{run[:status]}.",
+        'run_error' => "Your Rainforest Run <#{payload[:frontend_url]}|##{payload[:id]}> #{description}errored: #{run[:error_reason]}.",
+        'run_webhook_timeout' => "Your Rainforest run <#{payload[:frontend_url]}|##{payload[:id]}> #{description}timed out due to your webhook failing. If you need a hand debugging it, please let us know via email at team@rainforestqa.com.",
         'run_test_failure' => "<#{payload[:frontend_url]}|Test ##{payload[:id]}> failed!"
       }
     end

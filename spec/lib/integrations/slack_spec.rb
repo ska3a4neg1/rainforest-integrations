@@ -2,6 +2,27 @@ require 'spec_helper'
 require 'integrations'
 
 describe Integrations::Slack do
+  shared_examples_for "Slack notification with a specific text" do |expected_text|
+    it "expects a specific text" do
+        expected_params = {:body => {
+            :attachments => [{
+              :text => expected_text,
+              :fallback => expected_text,
+              :color => 'danger'
+            }]
+          }.to_json,
+          :headers => {
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json'
+          }
+        }
+        expect(HTTParty).to receive(:post).with(settings[:url], expected_params).and_call_original
+        VCR.use_cassette('generic_slack_notification') do
+          Integrations::Slack.new(event_name, payload, settings).send_event
+        end
+    end
+  end
+
   describe '#initialize' do
     let(:event_name) { 'run_failure' }
     let(:payload) do
@@ -29,7 +50,16 @@ describe Integrations::Slack do
   describe "send to Slack" do
     context "notify of run_completion" do
       let(:event_name) { "run_completion" }
-      let(:payload) { {:id => 0} }
+      let(:payload) do
+        {
+          id: 123,
+          frontend_url: 'http://example.com',
+          run: {
+            id: 123,
+            status: 'failed'
+          }
+        }
+      end
       let(:settings) { {:url => "https://hooks.slack.com/services/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"} }
 
       it 'sends a message to Slack' do
@@ -47,12 +77,12 @@ describe Integrations::Slack do
             status: 'failed'
           }
         }
-        expecter_text = "Your Rainforest Run <http://example.com|#123> failed."
+        expected_text = "Your Rainforest Run <http://example.com|#123> failed."
 
         expected_params = {:body => {
             :attachments => [{
-              :text => expecter_text,
-              :fallback => expecter_text,
+              :text => expected_text,
+              :fallback => expected_text,
               :color => 'danger'
             }]
           }.to_json,
@@ -66,6 +96,14 @@ describe Integrations::Slack do
         VCR.use_cassette('run_completion_notify_slack') do
           Integrations::Slack.new(event_name, payload, settings).send_event
         end
+      end
+
+      context 'when there is a description' do
+        before do
+          payload[:run][:description] = 'some description'
+        end
+
+        it_should_behave_like "Slack notification with a specific text", "Your Rainforest Run <http://example.com|#123> (some description) failed."
       end
     end
 
@@ -89,12 +127,12 @@ describe Integrations::Slack do
       end
 
       it 'inludes the error reason' do
-        expecter_text = "Your Rainforest Run <http://example.com|#123> errored: We were unable to create social account(s)."
+        expected_text = "Your Rainforest Run <http://example.com|#123> errored: We were unable to create social account(s)."
 
         expected_params = {:body => {
             :attachments => [{
-              :text => expecter_text,
-              :fallback => expecter_text,
+              :text => expected_text,
+              :fallback => expected_text,
               :color => 'danger'
             }]
           }.to_json,
