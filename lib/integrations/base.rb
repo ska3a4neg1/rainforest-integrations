@@ -3,7 +3,7 @@ require "httparty"
 
 module Integrations
   class Base
-    attr_reader :event_name, :payload, :settings
+    attr_reader :event_name, :payload, :settings, :run
 
     def self.key
       raise 'key must be defined in the child class'
@@ -13,6 +13,7 @@ module Integrations
       validate_settings settings
       @event_name = event_name
       @payload = payload
+      @run = payload[:run] || {}
       @settings = settings
     end
 
