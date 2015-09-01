@@ -25,6 +25,9 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'guard'
   gem 'guard-rspec'
+end
+
+group :test do
   gem 'simplecov'
   gem 'vcr'
   gem 'webmock'

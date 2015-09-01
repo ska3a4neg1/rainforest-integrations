@@ -35,6 +35,8 @@ class EventsController < ApplicationController
   end
 
   def verify_signature
+    return true if Rails.env.development?
+
     body_string = request.body.read
     digest = OpenSSL::Digest.new('sha256')
     hmac = OpenSSL::HMAC.hexdigest(digest, SIGNING_KEY, body_string)
