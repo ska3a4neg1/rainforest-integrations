@@ -37,14 +37,74 @@ describe Integrations::Slack do
           Integrations::Slack.new(event_name, payload, settings).send_event
         end
       end
+
+      it 'includes the run result' do
+        payload = {
+          id: 123,
+          frontend_url: 'http://example.com',
+          run: {
+            id: 123,
+            status: 'failed'
+          }
+        }
+        expecter_text = "Your Rainforest Run <http://example.com|#123> failed."
+
+        expected_params = {:body => {
+            :attachments => [{
+              :text => expecter_text,
+              :fallback => expecter_text,
+              :color => 'danger'
+            }]
+          }.to_json,
+          :headers => {
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json'
+          }
+        }
+        expect(HTTParty).to receive(:post).with(settings[:url], expected_params).and_call_original
+
+        VCR.use_cassette('run_completion_notify_slack') do
+          Integrations::Slack.new(event_name, payload, settings).send_event
+        end
+      end
     end
 
     context "notify of run_error" do
       let(:event_name) { "run_error" }
-      let(:payload) { {:id => 0} }
+      let(:payload) do
+        {
+          id: 123,
+          frontend_url: 'http://example.com',
+          run: {
+            error_reason: 'We were unable to create social account(s)'
+          }
+        }
+      end
       let(:settings) { {:url => "https://hooks.slack.com/services/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"} }
 
       it 'sends a message to Slack' do
+        VCR.use_cassette('run_error_notify_slack') do
+          Integrations::Slack.new(event_name, payload, settings).send_event
+        end
+      end
+
+      it 'inludes the error reason' do
+        expecter_text = "Your Rainforest Run <http://example.com|#123> errored: We were unable to create social account(s)."
+
+        expected_params = {:body => {
+            :attachments => [{
+              :text => expecter_text,
+              :fallback => expecter_text,
+              :color => 'danger'
+            }]
+          }.to_json,
+          :headers => {
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json'
+          }
+        }
+        expect(HTTParty).to receive(:post).with(settings[:url], expected_params).and_call_original
+
         VCR.use_cassette('run_error_notify_slack') do
           Integrations::Slack.new(event_name, payload, settings).send_event
         end

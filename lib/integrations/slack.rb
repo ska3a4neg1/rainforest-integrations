@@ -47,10 +47,11 @@ module Integrations
 
     def message_text
       {
-        'run_completion' => "<#{payload[:frontend_url]}|Run #{payload[:id]}> completed.",
-        'run_error' => "Error in <#{payload[:frontend_url]}|run #{payload[:id]}>",
-        'run_webhook_timeout' => "Webhook of run <#{payload[:frontend_url]}|#{payload[:id]}> timed out",
-        'run_test_failure' => "<#{payload[:frontend_url]}|Test #{payload[:id]}> failed!"
+
+        'run_completion' => "Your Rainforest Run <#{payload[:frontend_url]}|##{payload[:id]}> #{run[:status]}.",
+        'run_error' => "Your Rainforest Run <#{payload[:frontend_url]}|##{payload[:id]}> errored: #{run[:error_reason]}.",
+        'run_webhook_timeout' => "Your Rainforest run <#{payload[:frontend_url]}|##{payload[:id]}> timed out due to your webhook failing. If you need a hand debugging it, please let us know via email at team@rainforestqa.com.",
+        'run_test_failure' => "<#{payload[:frontend_url]}|Test ##{payload[:id]}> failed!"
       }
     end
 
