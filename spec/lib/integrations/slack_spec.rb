@@ -68,34 +68,8 @@ describe Integrations::Slack do
         end
       end
 
-      it 'includes the run result' do
-        payload = {
-          id: 123,
-          frontend_url: 'http://example.com',
-          run: {
-            id: 123,
-            status: 'failed'
-          }
-        }
-        expected_text = "Your Rainforest Run <http://example.com|#123> failed."
-
-        expected_params = {:body => {
-            :attachments => [{
-              :text => expected_text,
-              :fallback => expected_text,
-              :color => 'danger'
-            }]
-          }.to_json,
-          :headers => {
-            'Content-Type' => 'application/json',
-            'Accept' => 'application/json'
-          }
-        }
-        expect(HTTParty).to receive(:post).with(settings[:url], expected_params).and_call_original
-
-        VCR.use_cassette('run_completion_notify_slack') do
-          Integrations::Slack.new(event_name, payload, settings).send_event
-        end
+      describe 'run result inclusion' do
+        it_should_behave_like "Slack notification with a specific text", "Your Rainforest Run <http://example.com|#123> failed."
       end
 
       context 'when there is a description' do
@@ -126,26 +100,8 @@ describe Integrations::Slack do
         end
       end
 
-      it 'inludes the error reason' do
-        expected_text = "Your Rainforest Run <http://example.com|#123> errored: We were unable to create social account(s)."
-
-        expected_params = {:body => {
-            :attachments => [{
-              :text => expected_text,
-              :fallback => expected_text,
-              :color => 'danger'
-            }]
-          }.to_json,
-          :headers => {
-            'Content-Type' => 'application/json',
-            'Accept' => 'application/json'
-          }
-        }
-        expect(HTTParty).to receive(:post).with(settings[:url], expected_params).and_call_original
-
-        VCR.use_cassette('run_error_notify_slack') do
-          Integrations::Slack.new(event_name, payload, settings).send_event
-        end
+      describe 'error reason inclusion' do
+        it_should_behave_like "Slack notification with a specific text", "Your Rainforest Run <http://example.com|#123> errored: We were unable to create social account(s)."
       end
     end
 
