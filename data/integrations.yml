@@ -2,4 +2,15 @@
 slack:
   title: 'Slack'
   settings:
-    - { key: 'url', title: 'Slack URL', required: true }
+    - key: 'url'
+      title: 'Slack URL'
+      required: true
+hipchat:
+  title: 'HipChat'
+  settings:
+    - key: 'room_id'
+      title: 'HipChat room id'
+      required: true
+    - key: 'auth_token'
+      title: 'HipChat Auth token'
+      required: true
