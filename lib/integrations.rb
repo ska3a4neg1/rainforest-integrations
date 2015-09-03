@@ -17,7 +17,7 @@ module Integrations
   end
 
   def self.send_event(event_name: , integrations: , payload: )
-    EventValidator.new(event_name, payload).validate!
+    EventValidator.new(event_name, integrations, payload).validate!
 
     integrations.each do |integration|
       integration_name = integration[:key]

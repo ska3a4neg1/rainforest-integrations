@@ -5,7 +5,7 @@ slack:
     - key: 'url'
       title: 'Slack URL'
       required: true
-hipchat:
+hip_chat:
   title: 'HipChat'
   settings:
     - key: 'room_id'
