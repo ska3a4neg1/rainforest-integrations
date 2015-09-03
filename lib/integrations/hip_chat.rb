@@ -7,8 +7,8 @@ module Integrations
     def send_event
       response = HTTParty.post(url,
         body: {
-          color: 'green',
-          message: 'Test successful!',
+          color: message_color,
+          message: message_text,
           notify: 'true',
           message_format: 'text'
         }.to_json,
@@ -26,8 +26,17 @@ module Integrations
       "https://api.hipchat.com/v2/room/#{settings[:room_id]}/notification"
     end
 
-    def message
+    def message_color
+      return 'red' if payload[:run] && payload[:run][:status] == 'failed'
 
+      color_hash = {
+        'run_completion' => "green",
+        'run_error' => "red",
+        'run_webhook_timeout' => "red",
+        'run_test_failure' => "red",
+      }
+
+      color_hash[event_name]
     end
   end
 end
