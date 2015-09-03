@@ -17,7 +17,7 @@ class EventValidator
     raise InvalidPayloadError, "payload must be properly formatted JSON" unless @payload.is_a? Hash
     raise InvalidPayloadError, "integrations must be an array" unless @integrations.is_a? Array
 
-    keys = event.fetch('required_keys').map(&:to_sym)
+    keys = event.fetch('required_keys').map(&:keys).flatten.map(&:to_sym)
     unless keys & @payload.keys == keys
       raise InvalidPayloadError, "Payload for event #{@event_name} did not contain required keys #{keys.map(&:to_s)}"
     end

@@ -42,14 +42,25 @@ module Integrations
     end
 
     def message_text
-      message_hash = {
-        'run_completion' => "Your Rainforest Run <#{payload[:frontend_url]} | Run ##{run[:id]}> #{run[:description]} #{run[:status]}. #{time_to_finish}",
-        'run_error' => "Your Rainforest Run <#{payload[:frontend_url]} | Run ##{run[:id]}> #{run[:description]} errored: #{run[:error_reason]}.",
-        'run_webhook_timeout' => "Your Rainforest Run <#{payload[:frontend_url]} | Run ##{run[:id]}> #{run[:description]} timed out due to your webhook failing. If you need a hand debugging it, please let us know via email at team@rainforestqa.com.",
-        'run_test_failure' => "<#{payload[:frontend_url]} | Test ##{payload[:failed_test][:id]}> failed!"
-      }
+      description = run[:description] ? ": #{run_description}" : ""
+      message = self.send(event_name.concat("_message").to_sym)
+      "Your Rainforest Run <#{payload[:frontend_url]} | Run ##{run[:id]}#{description}>\n#{message}"
+    end
 
-      message_hash[event_name]
+    def run_completion_message
+      "#{run[:status]}. #{time_to_finish}"
+    end
+
+    def run_error_message
+      "errored: #{run[:error_reason]}."
+    end
+
+    def run_webhook_timeout_message
+      "has timed out due to your webhook failing. If you need a hand debugging it, please let us know via email at help@rainforestqa.com."
+    end
+
+    def run_test_failure_message
+      "has a failed at test! Test ##{payload[:failed_test][:id]}: #{payload[:failed_test][:name]}"
     end
 
     def time_to_finish

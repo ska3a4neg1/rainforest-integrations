@@ -1,15 +1,32 @@
 ---
 run_completion:
   required_keys:
-    - run
-    - failed_tests
+    - run:
+      - id:
+      - status:
+      - description:
+      - time_to_finish:
+    - frontend_url:
+    - failed_tests:
 run_error:
   required_keys:
-    - run
+    - run:
+      - id:
+      - description:
+      - error_reason:
+    - frontend_url:
 run_webhook_timeout:
   required_keys:
-    - run
+    - run:
+      - id:
+      - description:
+    - frontend_url:
 run_test_failure:
   required_keys:
-    - run
-    - failed_test
+    - run:
+      - id:
+      - description:
+    - frontend_url:
+    - failed_test:
+      - id:
+      - name:
