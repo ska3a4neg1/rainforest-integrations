@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'integrations'
 
 describe Integrations::Slack do
@@ -33,7 +33,6 @@ describe Integrations::Slack do
         }
       }
     end
-    let(:settings) { { url: 'https://slack.com/bogus_integration' } }
 
 
     subject { described_class.new(event_name, payload, settings) }
@@ -48,11 +47,12 @@ describe Integrations::Slack do
   end
 
   describe "send to Slack" do
+    let(:settings) { {:url => "https://hooks.slack.com/services/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"} }
+
     context "notify of run_completion" do
       let(:event_name) { "run_completion" }
       let(:payload) do
         {
-          id: 123,
           frontend_url: 'http://example.com',
           run: {
             id: 123,
@@ -61,7 +61,6 @@ describe Integrations::Slack do
           }
         }
       end
-      let(:settings) { {:url => "https://hooks.slack.com/services/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"} }
 
       it 'sends a message to Slack' do
         VCR.use_cassette('run_completion_notify_slack') do
@@ -70,7 +69,7 @@ describe Integrations::Slack do
       end
 
       describe 'run result inclusion in text' do
-        it_should_behave_like "Slack notification with a specific text", "Your Rainforest Run <http://example.com|#123> failed. Time to finish: 25 minutes 3 seconds"
+        it_should_behave_like "Slack notification with a specific text", "Your Rainforest Run <http://example.com | Run #123> failed. Time to finish: 25 minutes 3 seconds"
       end
 
       context 'when there is a description' do
@@ -78,7 +77,7 @@ describe Integrations::Slack do
           payload[:run][:description] = 'some description'
         end
 
-        it_should_behave_like "Slack notification with a specific text", "Your Rainforest Run <http://example.com|#123> (some description) failed. Time to finish: 25 minutes 3 seconds"
+        it_should_behave_like "Slack notification with a specific text", "Your Rainforest Run <http://example.com | Run #123: some description> failed. Time to finish: 25 minutes 3 seconds"
       end
 
       describe 'time to finish inclusion in text' do
@@ -87,7 +86,7 @@ describe Integrations::Slack do
             payload[:run][:time_to_finish] = (36.minutes + 44.seconds).to_i
           end
 
-          it_should_behave_like "Slack notification with a specific text", "Your Rainforest Run <http://example.com|#123> failed. Time to finish: 36 minutes 44 seconds"
+          it_should_behave_like "Slack notification with a specific text", "Your Rainforest Run <http://example.com | Run #123> failed. Time to finish: 36 minutes 44 seconds"
         end
 
         context 'when time to finish is over an hour' do
@@ -95,7 +94,7 @@ describe Integrations::Slack do
             payload[:run][:time_to_finish] = (6.hours + 36.minutes + 44.seconds).to_i
           end
 
-          it_should_behave_like "Slack notification with a specific text", "Your Rainforest Run <http://example.com|#123> failed. Time to finish: 6 hours 36 minutes 44 seconds"
+          it_should_behave_like "Slack notification with a specific text", "Your Rainforest Run <http://example.com | Run #123> failed. Time to finish: 6 hours 36 minutes 44 seconds"
         end
 
       end
@@ -105,14 +104,13 @@ describe Integrations::Slack do
       let(:event_name) { "run_error" }
       let(:payload) do
         {
-          id: 123,
           frontend_url: 'http://example.com',
           run: {
+            id: 123,
             error_reason: 'We were unable to create social account(s)'
           }
         }
       end
-      let(:settings) { {:url => "https://hooks.slack.com/services/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"} }
 
       it 'sends a message to Slack' do
         VCR.use_cassette('run_error_notify_slack') do
@@ -121,14 +119,19 @@ describe Integrations::Slack do
       end
 
       describe 'error reason inclusion' do
-        it_should_behave_like "Slack notification with a specific text", "Your Rainforest Run <http://example.com|#123> errored: We were unable to create social account(s)."
+        it_should_behave_like "Slack notification with a specific text", "Your Rainforest Run <http://example.com | Run #123> errored: We were unable to create social account(s)."
       end
     end
 
     context "notify of run_webhook_timeout" do
       let(:event_name) { "run_webhook_timeout" }
-      let(:payload) { {:id => 0} }
-      let(:settings) { {:url => "https://hooks.slack.com/services/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"} }
+      let(:payload) do
+        {
+          run: {
+            id: 7
+          }
+        }
+      end
 
       it 'sends a message to Slack' do
         VCR.use_cassette('run_webhook_timeout_notify_slack') do
@@ -139,8 +142,14 @@ describe Integrations::Slack do
 
     context "notify of run_test_failure" do
       let(:event_name) { "run_test_failure" }
-      let(:payload) { {:id => 0} }
-      let(:settings) { {:url => "https://hooks.slack.com/services/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"} }
+      let(:payload) do
+        {
+          failed_test: {
+            id: 7,
+            name: "My lucky test"
+          }
+        }
+      end
 
       it 'sends a message to Slack' do
         VCR.use_cassette('run_test_failure_notify_slack') do
@@ -148,7 +157,6 @@ describe Integrations::Slack do
         end
       end
     end
-
   end
 
   describe '#message_color' do

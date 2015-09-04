@@ -73,7 +73,7 @@ describe EventsController, type: :controller do
 
       context 'with invalid keys in the JSON request' do
         before do
-          allow(Integrations).to receive(:send_event).and_raise EventValidator::InvalidPayloadError
+          allow(Integrations).to receive(:send_event).and_raise PayloadValidator::InvalidPayloadError
         end
 
         let(:payload) { { foo: 'bar' }.to_json }
@@ -114,7 +114,7 @@ describe EventsController, type: :controller do
 
       context 'with a valid event' do
         before do
-          allow_any_instance_of(EventValidator).to receive(:validate!)
+          allow_any_instance_of(PayloadValidator).to receive(:validate!)
         end
 
         it 'returns a 201' do
@@ -125,7 +125,7 @@ describe EventsController, type: :controller do
 
       context 'with an invalid event' do
         before do
-          allow(Integrations).to receive(:send_event).and_raise EventValidator::InvalidPayloadError
+          allow(Integrations).to receive(:send_event).and_raise PayloadValidator::InvalidPayloadError
         end
 
         it 'returns a 400' do

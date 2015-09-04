@@ -1,5 +1,5 @@
 require 'integrations'
-require 'event_validator'
+require 'payload_validator'
 
 class EventsController < ApplicationController
   SIGNING_KEY = ENV.fetch('INTEGRATIONS_SIGNING_KEY').freeze
@@ -23,7 +23,7 @@ class EventsController < ApplicationController
       invalid_request e.message, type: 'misconfigured_integration'
     rescue Integrations::UserConfigurationError => e
       invalid_request e.message, type: 'user configuration error'
-    rescue EventValidator::InvalidPayloadError => e
+    rescue PayloadValidator::InvalidPayloadError => e
       invalid_request e.message, type: 'invalid payload'
     end
   end

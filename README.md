@@ -69,21 +69,38 @@ in the payload:
 
 
 #### `run_completion`
-Keys: run, failed_tests
+
+- **run**: id, status, description, time_to_finish
+
+- **frontend_url**: 
+
+- **failed_tests**: name
+
 
 #### `run_error`
-Keys: run
+
+- **run**: id, description, error_reason
+
+- **frontend_url**: 
+
 
 #### `run_webhook_timeout`
-Keys: run
+
+- **run**: id, description
+
+- **frontend_url**: 
+
 
 #### `run_test_failure`
-Keys: run, failed_test
+
+- **run**: id, description
+
+- **frontend_url**: 
+
+- **failed_test**: id, name
 
 
-The actual objects are similar to the objects returned in the
-Rainforest API, and will be fully documented once the format has been
-completely specified.
+
 
 ## Adding integrations
 There are two steps to adding a new integration:
