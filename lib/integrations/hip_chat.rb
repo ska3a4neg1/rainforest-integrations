@@ -18,6 +18,14 @@ module Integrations
           "Accept" => "application/json"
         }
       )
+
+      if response.code == 404
+        raise Integrations::UserConfigurationError.new('The room provided is was not found.')
+      elsif response.code == 401
+        raise Integrations::UserConfigurationError.new('The authorization token is invalid.')
+      elsif response.code != 200
+        raise Integrations::MisconfiguredIntegrationError.new('Invalid request to the HipChat API.')
+      end
     end
 
     private
