@@ -69,21 +69,38 @@ in the payload:
 
 
 #### `run_completion`
-Keys: run, failed_tests
+
+- **run**: id, status, description, time_to_finish
+
+- **frontend_url**: 
+
+- **failed_tests**: name
+
 
 #### `run_error`
-Keys: run
+
+- **run**: id, description, error_reason
+
+- **frontend_url**: 
+
 
 #### `run_webhook_timeout`
-Keys: run
+
+- **run**: id, description
+
+- **frontend_url**: 
+
 
 #### `run_test_failure`
-Keys: run, failed_test
+
+- **run**: id, description
+
+- **frontend_url**: 
+
+- **failed_test**: id, name
 
 
-The actual objects are similar to the objects returned in the
-Rainforest API, and will be fully documented once the format has been
-completely specified.
+
 
 ## Adding integrations
 There are two steps to adding a new integration:
@@ -99,13 +116,6 @@ There are two steps to adding a new integration:
    for all other problems.
 2. Edit `data/integrations.yml` to add your integration (including the
    appropriate values for `title` and `settings`).
-
-## Local setup
-
-1. Clone this repository
-2. `bundle install`
-3. You need to set the environment variable `INTEGRATION_SENTRY_DSN` (no default included due to the public nature of this project)
-4. `rails s`
 
 ## Contributing
 1. Fork it ( https://github.com/[my-github-username]/rainforest-integrations/fork )

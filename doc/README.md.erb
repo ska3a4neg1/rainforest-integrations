@@ -67,14 +67,13 @@ Events come with a payload that is specific to the event. The
 following events are currently supported, with the corresponding keys
 in the payload:
 
-<% @events.each do |event_name, event_data| %>
+<% @events.each do |event_name, data_hashes| %>
 #### `<%= event_name %>`
-Keys: <%= event_data['required_keys'].join(', ') %>
+<% data_hashes.each do |key, fields| %>
+- **<%= key %>**: <%= fields.join(", ") unless fields.nil? %>
+<% end %>
 <% end %>
 
-The actual objects are similar to the objects returned in the
-Rainforest API, and will be fully documented once the format has been
-completely specified.
 
 ## Adding integrations
 There are two steps to adding a new integration:
