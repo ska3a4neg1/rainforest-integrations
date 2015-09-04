@@ -19,7 +19,10 @@ module Integrations
         }
       )
 
-      if response.code == 404
+      # HipChat returns nil for successful notifications for some reason
+      if response.nil?
+        true
+      elsif response.code == 404
         raise Integrations::UserConfigurationError.new('The room provided is was not found.')
       elsif response.code == 401
         raise Integrations::UserConfigurationError.new('The authorization token is invalid.')

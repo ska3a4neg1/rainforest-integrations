@@ -33,7 +33,6 @@ describe Integrations::Slack do
         }
       }
     end
-    let(:settings) { { url: 'https://slack.com/bogus_integration' } }
 
 
     subject { described_class.new(event_name, payload, settings) }
@@ -54,7 +53,6 @@ describe Integrations::Slack do
       let(:event_name) { "run_completion" }
       let(:payload) do
         {
-          id: 123,
           frontend_url: 'http://example.com',
           run: {
             id: 123,
@@ -127,7 +125,13 @@ describe Integrations::Slack do
 
     context "notify of run_webhook_timeout" do
       let(:event_name) { "run_webhook_timeout" }
-      let(:payload) { {:id => 0} }
+      let(:payload) do
+        {
+          run: {
+            id: 7
+          }
+        }
+      end
 
       it 'sends a message to Slack' do
         VCR.use_cassette('run_webhook_timeout_notify_slack') do
@@ -153,7 +157,6 @@ describe Integrations::Slack do
         end
       end
     end
-
   end
 
   describe '#message_color' do
