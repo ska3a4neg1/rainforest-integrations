@@ -9,7 +9,7 @@ module Integrations
         body: {
           color: message_color,
           message: message_text,
-          notify: settings[:notify],
+          notify: (settings[:notify] || false),
           message_format: 'text'
         }.to_json,
         headers: {
