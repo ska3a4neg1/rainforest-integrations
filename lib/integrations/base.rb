@@ -31,8 +31,6 @@ module Integrations
       end.compact
     end
 
-    protected
-
     def validate_settings(settings)
       self.class.required_settings.each do |setting|
         unless settings.key? setting
@@ -42,9 +40,9 @@ module Integrations
     end
 
     def message_text
-      description = run[:description] ? ": #{run_description}" : ""
-      message = self.send(event_name.concat("_message").to_sym)
-      "Your Rainforest Run <#{payload[:frontend_url]} | Run ##{run[:id]}#{description}>\n#{message}"
+      description = run[:description] ? ": #{run[:description]}" : ""
+      message = self.send(event_name.dup.concat("_message").to_sym)
+      "Your Rainforest Run <#{payload[:frontend_url]} | Run ##{run[:id]}#{description}> #{message}"
     end
 
     def run_completion_message

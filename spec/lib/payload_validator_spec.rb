@@ -1,7 +1,7 @@
-require 'spec_helper'
-require 'event_validator'
+require 'rails_helper'
+require 'payload_validator'
 
-describe EventValidator do
+describe PayloadValidator do
   describe '#validate!' do
     let(:event_name) { 'run_completion' }
     let(:payload) do
@@ -10,11 +10,13 @@ describe EventValidator do
           id: 3,
           status: 'failed'
         },
+        frontend_url: "http://www.rainforestqa.com/",
         failed_tests: []
       }
     end
+    let(:integrations) { [] }
 
-    subject { EventValidator.new(event_name, payload).validate! }
+    subject { PayloadValidator.new(event_name, integrations, payload).validate! }
 
     context 'with a valid event' do
       it 'does not raise an error' do
@@ -26,7 +28,7 @@ describe EventValidator do
       let(:event_name) { 'dinosaur_attack' }
 
       it 'raises an InvalidPayloadError' do
-        expect { subject }.to raise_error EventValidator::InvalidPayloadError
+        expect { subject }.to raise_error PayloadValidator::InvalidPayloadError
       end
     end
 
@@ -38,7 +40,7 @@ describe EventValidator do
       end
 
       it 'raises an InvalidPayloadError' do
-        expect { subject }.to raise_error EventValidator::InvalidPayloadError
+        expect { subject }.to raise_error PayloadValidator::InvalidPayloadError
       end
     end
   end

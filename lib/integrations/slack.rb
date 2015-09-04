@@ -30,12 +30,6 @@ module Integrations
       end
     end
 
-    private
-
-    def url
-      settings[:url]
-    end
-
     def message_color
       return 'danger' if payload[:run] && payload[:run][:status] == 'failed'
 
@@ -47,6 +41,12 @@ module Integrations
       }
 
       color_hash[event_name]
+    end
+
+    private
+
+    def url
+      settings[:url]
     end
   end
 end

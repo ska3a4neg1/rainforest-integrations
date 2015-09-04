@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'integrations'
 
 describe Integrations do
@@ -10,6 +10,7 @@ describe Integrations do
           id: 3,
           status: 'failed'
         },
+        frontend_url: "http://www.rainforestqa.com/",
         failed_tests: []
       }
     end
