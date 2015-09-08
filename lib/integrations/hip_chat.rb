@@ -1,3 +1,5 @@
+require "integrations/base"
+
 module Integrations
   class HipChat < Base
     def self.key
