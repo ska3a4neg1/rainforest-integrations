@@ -1,0 +1,52 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://www.pivotaltracker.com/services/v5/projects/1141528/stories
+    body:
+      encoding: UTF-8
+      string: '{"name":"Your Rainforest Run \u003chttp://www.rainforestqa.com/ | Run
+        #9: rainforest run\u003e failed. Time to finish: 12 minutes 30 seconds","description":"Failed
+        Tests:\nAlways fails: http://www.rainforestqa.com/\n","story_type":"bug","labels":[{"name":"rainforest"}]}'
+    headers:
+      X-Trackertoken:
+      - foobar
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+  response:
+    status:
+      code: 403
+      message: Forbidden
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 403 Forbidden
+      Cache-Control:
+      - no-cache
+      Date:
+      - Wed, 09 Sep 2015 20:38:09 GMT
+      X-Request-Id:
+      - b1294efdaea4bb91cea0a7698ca44c07
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      X-Runtime:
+      - '0.016078'
+      X-Rack-Cache:
+      - invalidate, pass
+      X-Powered-By:
+      - Phusion Passenger
+      Server:
+      - nginx + Phusion Passenger
+    body:
+      encoding: UTF-8
+      string: '{"code":"invalid_authentication","kind":"error","error":"Invalid authentication
+        credentials were presented.","possible_fix":"Verify that your token value
+        matches what''s shown on your Profile page in Tracker."}'
+    http_version: 
+  recorded_at: Wed, 09 Sep 2015 20:38:09 GMT
+recorded_with: VCR 2.9.3

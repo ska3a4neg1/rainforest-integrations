@@ -57,5 +57,29 @@ describe Integrations::PivotalTracker do
         expect{ subject.send_event }.to_not raise_error
       end
     end
+
+    context "with wrong project ID" do
+      before do
+        settings[:project_id] = 1337
+      end
+
+      it "returns a user configuration error" do
+        VCR.use_cassette('pivotal_tracker_wrong_id') do
+          expect{ subject.send_event }.to raise_error Integrations::UserConfigurationError
+        end
+      end
+    end
+
+    context "with invalid authorization token" do
+      before do
+        settings[:auth_token] = "foobar"
+      end
+
+      it "returns a user configuration error" do
+        VCR.use_cassette('pivotal_tracker_wrong_auth_token') do
+          expect{ subject.send_event }.to raise_error Integrations::UserConfigurationError
+        end
+      end
+    end
   end
 end
