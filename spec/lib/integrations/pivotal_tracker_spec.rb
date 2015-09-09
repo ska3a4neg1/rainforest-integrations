@@ -81,5 +81,19 @@ describe Integrations::PivotalTracker do
         end
       end
     end
+
+    context "with event that requires no separate description" do
+      let(:event_name) { "run_error" }
+
+      before do
+        payload[:run][:error_reason] = "This is a test error"
+      end
+
+      it "receives a 200 response from API" do
+        VCR.use_cassette('pivotal_tracker_no_description') do
+          expect{ subject.send_event }.to_not raise_error
+        end
+      end
+    end
   end
 end
