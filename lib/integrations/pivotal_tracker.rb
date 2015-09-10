@@ -31,19 +31,6 @@ module Integrations
       end
     end
 
-    def message_color
-      return 'danger' if payload[:run] && payload[:run][:status] == 'failed'
-
-      color_hash = {
-        'run_completion' => "good",
-        'run_error' => "danger",
-        'run_webhook_timeout' => "danger",
-        'run_test_failure' => "danger",
-      }
-
-      color_hash[event_name]
-    end
-
     private
 
     def url
