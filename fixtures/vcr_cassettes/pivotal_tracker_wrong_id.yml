@@ -1,0 +1,55 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://www.pivotaltracker.com/services/v5/projects/1337/stories
+    body:
+      encoding: UTF-8
+      string: '{"name":"Your Rainforest Run \u003chttp://www.rainforestqa.com/ | Run
+        #9: rainforest run\u003e failed. Time to finish: 12 minutes 30 seconds","description":"Failed
+        Tests:\nAlways fails: http://www.rainforestqa.com/\n","story_type":"bug","labels":[{"name":"rainforest"}]}'
+    headers:
+      X-Trackertoken:
+      - 8537292c903ca580bcd10b800709a136
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+  response:
+    status:
+      code: 403
+      message: Forbidden
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 403 Forbidden
+      Cache-Control:
+      - no-cache
+      Date:
+      - Wed, 09 Sep 2015 20:38:09 GMT
+      X-Request-Id:
+      - f57c8898479cd4747676b09152d0d0b0
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      X-Runtime:
+      - '0.038932'
+      X-Rack-Cache:
+      - invalidate, pass
+      X-Powered-By:
+      - Phusion Passenger
+      Server:
+      - nginx + Phusion Passenger
+    body:
+      encoding: UTF-8
+      string: '{"code":"unauthorized_operation","kind":"error","error":"Authorization
+        failure.","general_problem":"You aren''t authorized to access the requested
+        resource.","possible_fix":"Your project permissions are determined on the
+        Project Membership page. If you are receiving this error you may be trying
+        to access the wrong project, or the project API access is disabled, or someone
+        listed as the project''s Owner needs to change your membership type."}'
+    http_version: 
+  recorded_at: Wed, 09 Sep 2015 20:38:09 GMT
+recorded_with: VCR 2.9.3
