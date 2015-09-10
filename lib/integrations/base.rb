@@ -40,9 +40,20 @@ module Integrations
     end
 
     def message_text
-      description = run[:description] ? ": #{run[:description]}" : ""
       message = self.send(event_name.dup.concat("_message").to_sym)
-      "Your Rainforest Run <#{payload[:frontend_url]} | Run ##{run[:id]}#{description}> #{message}"
+      "Your Rainforest Run (#{run_href}) #{message}"
+    end
+
+    def run_href
+      "Run ##{run[:id]}#{run_description} - #{payload[:frontend_url]}"
+    end
+
+    def test_href
+      "Test ##{payload[:failed_test][:id]}: #{payload[:failed_test][:name]} - #{payload[:failed_test][:url]}"
+    end
+
+    def run_description
+      run[:description] ? ": #{run[:description]}" : ""
     end
 
     def run_completion_message
@@ -58,7 +69,7 @@ module Integrations
     end
 
     def run_test_failure_message
-      "has a failed at test! Test ##{payload[:failed_test][:id]}: #{payload[:failed_test][:name]}"
+      "has a failed at test! #{test_href}"
     end
 
     def time_to_finish

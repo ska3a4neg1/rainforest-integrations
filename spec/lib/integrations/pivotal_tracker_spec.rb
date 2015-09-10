@@ -28,7 +28,7 @@ describe Integrations::PivotalTracker do
         auth_token: "8537292c903ca580bcd10b800709a136",
       }
     end
-    let(:expected_message) { "Your Rainforest Run <http://www.rainforestqa.com/ | Run #9: rainforest run> failed. Time to finish: 12 minutes 30 seconds" }
+    let(:expected_message) { "Your Rainforest Run (Run #9: rainforest run - http://www.rainforestqa.com/) failed. Time to finish: 12 minutes 30 seconds" }
     let(:expected_url) { "https://www.pivotaltracker.com/services/v5/projects/#{settings[:project_id]}/stories" }
     let(:expected_description) do
       "Failed Tests:\n#{payload[:failed_tests][0][:name]}: #{payload[:failed_tests][0][:url]}\n"
