@@ -55,5 +55,9 @@ module Integrations
     def run_href
       "<a href=\"#{payload[:frontend_url]}\">Run ##{run[:id]}#{run_description}</a>"
     end
+
+    def test_href
+      "<a href=\"#{payload[:failed_test][:url]}\">Test ##{payload[:failed_test][:id]}: #{payload[:failed_test][:name]}</a>"
+    end
   end
 end

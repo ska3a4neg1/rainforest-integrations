@@ -6,8 +6,9 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"attachments":[{"text":"Your Rainforest Run (\u003c | Run #\u003e)
-        has a failed at test! Test #7: My lucky test","fallback":"Your Rainforest
-        Run (\u003c | Run #\u003e) has a failed at test! Test #7: My lucky test","color":"danger"}]}'
+        has a failed at test! \u003c | Test #7: My lucky test\u003e","fallback":"Your
+        Rainforest Run (\u003c | Run #\u003e) has a failed at test! \u003c | Test
+        #7: My lucky test\u003e","color":"danger"}]}'
     headers:
       Content-Type:
       - application/json
@@ -23,7 +24,7 @@ http_interactions:
       Content-Type:
       - text/html
       Date:
-      - Thu, 10 Sep 2015 22:53:58 GMT
+      - Thu, 10 Sep 2015 23:59:14 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -38,5 +39,5 @@ http_interactions:
       encoding: UTF-8
       string: ok
     http_version: 
-  recorded_at: Thu, 10 Sep 2015 22:53:59 GMT
+  recorded_at: Thu, 10 Sep 2015 23:59:14 GMT
 recorded_with: VCR 2.9.3

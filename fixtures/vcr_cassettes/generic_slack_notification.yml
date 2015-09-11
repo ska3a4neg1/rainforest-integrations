@@ -6,9 +6,9 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"attachments":[{"text":"Your Rainforest Run (\u003chttp://example.com
-        | Run #123\u003e) failed. Time to finish: 25 minutes 3 seconds","fallback":"Your
+        | Run #123\u003e) failed. Time to finish: 36 minutes 44 seconds","fallback":"Your
         Rainforest Run (\u003chttp://example.com | Run #123\u003e) failed. Time to
-        finish: 25 minutes 3 seconds","color":"danger"}]}'
+        finish: 36 minutes 44 seconds","color":"danger"}]}'
     headers:
       Content-Type:
       - application/json
@@ -24,7 +24,7 @@ http_interactions:
       Content-Type:
       - text/html
       Date:
-      - Thu, 10 Sep 2015 23:15:01 GMT
+      - Thu, 10 Sep 2015 23:59:13 GMT
       Server:
       - Apache
       Strict-Transport-Security:
@@ -39,5 +39,5 @@ http_interactions:
       encoding: UTF-8
       string: ok
     http_version: 
-  recorded_at: Thu, 10 Sep 2015 23:15:01 GMT
+  recorded_at: Thu, 10 Sep 2015 23:59:13 GMT
 recorded_with: VCR 2.9.3

@@ -29,17 +29,17 @@ http_interactions:
       Cache-Control:
       - max-age=0, private, must-revalidate
       Date:
-      - Thu, 10 Sep 2015 23:09:30 GMT
+      - Thu, 10 Sep 2015 23:59:15 GMT
       X-Tracker-Project-Version:
-      - '49'
+      - '50'
       X-Request-Id:
-      - 60a069174dfe62280b6f1255c5f3ffb2
+      - a81ed71d2a410592374e49059225b7a4
       X-Ua-Compatible:
       - IE=Edge,chrome=1
       Etag:
-      - '"a58a346ee3068f19e6077e7895aaaad0"'
+      - '"027f68b55f27535fdca91c98605055c6"'
       X-Runtime:
-      - '0.288338'
+      - '0.283595'
       X-Rack-Cache:
       - invalidate, pass
       X-Powered-By:
@@ -58,10 +58,10 @@ http_interactions:
       - '12'
     body:
       encoding: UTF-8
-      string: '{"kind":"story","id":103150412,"project_id":1141528,"name":"Your Rainforest
+      string: '{"kind":"story","id":103152926,"project_id":1141528,"name":"Your Rainforest
         Run (Run #9: rainforest run - http://www.rainforestqa.com/) failed. Time to
         finish: 12 minutes 30 seconds","description":"Failed Tests:\nAlways fails:
-        http://www.rainforestqa.com/\n","story_type":"bug","current_state":"unscheduled","requested_by_id":1408618,"owner_ids":[],"labels":[{"kind":"label","id":9144470,"project_id":1141528,"name":"rainforest","created_at":"2014-08-07T20:36:35Z","updated_at":"2014-08-07T20:36:35Z"}],"created_at":"2015-09-10T23:09:30Z","updated_at":"2015-09-10T23:09:30Z","url":"https://www.pivotaltracker.com/story/show/103150412"}'
+        http://www.rainforestqa.com/\n","story_type":"bug","current_state":"unscheduled","requested_by_id":1408618,"owner_ids":[],"labels":[{"kind":"label","id":9144470,"project_id":1141528,"name":"rainforest","created_at":"2014-08-07T20:36:35Z","updated_at":"2014-08-07T20:36:35Z"}],"created_at":"2015-09-10T23:59:15Z","updated_at":"2015-09-10T23:59:15Z","url":"https://www.pivotaltracker.com/story/show/103152926"}'
     http_version: 
-  recorded_at: Thu, 10 Sep 2015 23:09:30 GMT
+  recorded_at: Thu, 10 Sep 2015 23:59:15 GMT
 recorded_with: VCR 2.9.3
