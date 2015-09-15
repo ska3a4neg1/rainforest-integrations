@@ -4,7 +4,7 @@ require "httparty"
 
 module Integrations
   class Base
-    include Formatter
+    include Integrations::Formatter
     attr_reader :event_name, :payload, :settings, :run
 
     def self.key
