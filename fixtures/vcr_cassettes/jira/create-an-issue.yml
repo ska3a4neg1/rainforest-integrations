@@ -1,0 +1,62 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://admin:eizEcahrGBQAfT9BBhgoLvYikbpxZZ2LjvJVojevfpRWBBbFgj@rainforest-integration-testing.atlassian.net/rest/api/2/issue/
+    body:
+      encoding: UTF-8
+      string: '{"fields":{"project":{"key":"MVBP"},"summary":"Rainforest bug: failed_tests","description":"Creating
+        of an issue using project keys and issue type names using the REST API","issuetype":{"name":"Bug"}}}'
+    headers:
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 10 Sep 2015 19:57:50 GMT
+      Content-Type:
+      - application/json;charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Arequestid:
+      - 957x2368x1
+      X-Asen:
+      - SEN-5727558
+      Set-Cookie:
+      - JSESSIONID=EB0B44397A89C2D4768AC4AAF2FA0325; Path=/; Secure; HttpOnly
+      - atlassian.xsrf.token=BDCA-NIQ9-W7BU-0SZK|873a64acad5399eef2beef12b64a5ad9064d0f3f|lin;
+        Path=/; Secure
+      - studio.crowd.tokenkey=""; Domain=.rainforest-integration-testing.atlassian.net;
+        Expires=Thu, 01-Jan-1970 00:00:10 GMT; Path=/; Secure; HttpOnly
+      - studio.crowd.tokenkey=Z0l979SfSYxJP8M534y0ig00; Domain=.rainforest-integration-testing.atlassian.net;
+        Path=/; Secure; HttpOnly
+      X-Seraph-Loginreason:
+      - OK
+      - OUT
+      X-Asessionid:
+      - fseoiy
+      X-Ausername:
+      - admin
+      X-Atenant-Id:
+      - rainforest-integration-testing.atlassian.net
+      Cache-Control:
+      - no-cache, no-store, no-transform
+      X-Content-Type-Options:
+      - nosniff
+      Strict-Transport-Security:
+      - max-age=315360000;includeSubDomains
+    body:
+      encoding: UTF-8
+      string: '{"id":"10023","key":"MVBP-8","self":"https://rainforest-integration-testing.atlassian.net/rest/api/2/issue/10023"}'
+    http_version: 
+  recorded_at: Thu, 10 Sep 2015 19:57:50 GMT
+recorded_with: VCR 2.9.3

@@ -17,3 +17,18 @@ hip_chat:
     - key: "notify"
       title: "True or False. Determines whether a notification will make an alert."
       required: "false"
+jira:
+  title: 'JIRA'
+  settings:
+    - key: 'username'
+      title: 'JIRA username (this is NOT your email)'
+      required: true
+    - key: 'password'
+      title: 'JIRA password'
+      required: true
+    - key: 'project_key'
+      title: 'Project Key'
+      required: true
+    - key: "jira_base_url"
+      title: "URL to your JIRA integration (ex: https://my-company.atlassian.net/)"
+      required: true

@@ -72,7 +72,7 @@ in the payload:
 
 - **run**: id, status, description, time_to_finish
 
-- **frontend_url**: 
+- **frontend_url**:
 
 - **failed_tests**: name
 
@@ -81,21 +81,21 @@ in the payload:
 
 - **run**: id, description, error_reason
 
-- **frontend_url**: 
+- **frontend_url**:
 
 
 #### `run_webhook_timeout`
 
 - **run**: id, description
 
-- **frontend_url**: 
+- **frontend_url**:
 
 
 #### `run_test_failure`
 
 - **run**: id, description
 
-- **frontend_url**: 
+- **frontend_url**:
 
 - **failed_test**: id, name
 
@@ -106,14 +106,19 @@ in the payload:
 There are two steps to adding a new integration:
 
 1. Add an integration class to the `lib/integrations` directory. This
-   should inherit from the `Integrations::Base` class and should
-   overwrite the `send_event` method. If the integration post is
-   unsuccessful, you should raise one of the following errors:
-   `Integrations::UserConfigurationError` for user configuration
+   should inherit from the `Integrations::Base` class. It needs to
+   overwrite the `send_event` method and define a `key` class method.
+   If the integration post is unsuccessful, you should raise one of
+   the following errors:
+
+   - `Integrations::UserConfigurationError` for user configuration
    problems (such as invalid credentials);
-   `Integrations::MisconfiguredIntegrationError` for non-user problems
-   in the integrations data from Rainforest; and `Integrations::Error`
-   for all other problems.
+
+   - `Integrations::MisconfiguredIntegrationError` for non-user problems
+   in the integrations data from Rainforest;
+
+   - `Integrations::Error` for all other problems.
+
 2. Edit `data/integrations.yml` to add your integration (including the
    appropriate values for `title` and `settings`).
 
@@ -123,6 +128,14 @@ There are two steps to adding a new integration:
 2. `bundle install`
 3. You need to set the environment variable `INTEGRATION_SENTRY_DSN` (no default included due to the public nature of this project)
 4. `rails s`
+
+### For internal Rainforest developers
+
+The main Rainforest app will try to call (by default, this is configurable) `http://integrations.dev` in development.
+
+1. Install Pow if you don't have it already: `curl get.pow.cx | sh`
+2. `ln -s ~/rainforest/rainforest-integration ~/.pow/integrations`
+
 
 ## Contributing
 1. Fork it ( https://github.com/[my-github-username]/rainforest-integrations/fork )
