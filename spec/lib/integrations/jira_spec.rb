@@ -10,7 +10,8 @@ describe Integrations::Jira do
       run: {
         id: 3,
         status: 'failed'
-      }
+      },
+      failed_tests: [failed_test]
     }
   end
   let(:settings) do
@@ -22,25 +23,16 @@ describe Integrations::Jira do
     }
   end
 
+  let(:failed_test) do
+    {
+      id: "20",
+      name: "Always fails",
+      url: "http://www.rainforestqa.com/"
+    }
+  end
+
   describe '#send_event' do
     let(:send_event) { subject.send_event }
-
-    context 'when everything works' do
-      let(:settings) do
-        {
-          username: 'admin',
-          password: 'eizEcahrGBQAfT9BBhgoLvYikbpxZZ2LjvJVojevfpRWBBbFgj',
-          jira_base_url: 'https://rainforest-integration-testing.atlassian.net',
-          project_key: 'MVBP'
-        }
-      end
-
-      it 'creates an issue' do
-        VCR.use_cassette('jira/create-an-issue') do
-          expect(send_event).to eq true
-        end
-      end
-    end
 
     context 'when there is an authentication error' do
       it 'raises a Integrations::UserConfigurationError' do
@@ -66,6 +58,75 @@ describe Integrations::Jira do
         allow(mock_response).to receive(:code).and_return(500)
         allow(HTTParty).to receive(:post).and_return(mock_response)
         expect { send_event }.to raise_error(Integrations::MisconfiguredIntegrationError, 'Invalid request to the JIRA API.')
+      end
+    end
+
+    context 'when the event has one or more failed test' do
+      let(:settings) do
+        {
+          username: 'admin',
+          password: 'eizEcahrGBQAfT9BBhgoLvYikbpxZZ2LjvJVojevfpRWBBbFgj',
+          jira_base_url: 'https://rainforest-integration-testing.atlassian.net',
+          project_key: 'MVBP'
+        }
+      end
+
+      let(:payload) do
+        {
+          run: {
+            id: 9,
+            status: "failed",
+            description: "rainforest run",
+            time_to_finish: 750
+          },
+          frontend_url: "http://www.rainforestqa.com/"
+        }
+      end
+
+      context 'when there is no failed tests' do
+        it 'does nothing and return false' do
+          expect(HTTParty).not_to receive(:post)
+          expect(send_event).to eq(false)
+        end
+      end
+
+      context 'when there are multiple failed tests' do
+        before do
+          payload[:failed_tests] = [failed_test, failed_test]
+        end
+
+        it 'creates on issue per failed test' do
+          expect(HTTParty).to receive(:post).twice.and_call_original
+          VCR.use_cassette('jira/create-issue-with-three-failed-tests') do
+            send_event
+          end
+        end
+      end
+
+      context 'when there is a single failed test' do
+        before do
+          payload[:failed_test] = failed_test
+        end
+
+        it 'creates on issue per failed test' do
+          expect(HTTParty).to receive(:post).once.and_call_original
+          VCR.use_cassette('jira/create-issue-with-one-failed-test') do
+            send_event
+          end
+        end
+
+        it 'has a useful summary and description' do
+          response = double('response')
+          allow(response).to receive(:code).and_return(201)
+          allow(HTTParty).to receive(:post) do |url, post_payload|
+            json_body = JSON.parse(post_payload[:body])
+
+            expect(json_body['fields']['summary']).to eq "Rainforest found a bug in 'Always fails'"
+            expect(json_body['fields']['description']).to eq "Failed test name: Always fails\nhttp://www.rainforestqa.com/"
+          end.and_return(response)
+
+          send_event
+        end
       end
     end
   end

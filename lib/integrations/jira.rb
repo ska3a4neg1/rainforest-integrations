@@ -7,12 +7,27 @@ module Integrations
     end
 
     def send_event
+      return false unless has_failed_tests?
+      if payload[:failed_test]
+        return create_issue(payload[:failed_test])
+      end
+
+      if payload[:failed_tests]
+        payload[:failed_tests].each do |test|
+          create_issue(test)
+        end
+      end
+    end
+
+    private
+
+    def create_issue(test)
       response = HTTParty.post(url,
         body: {
           fields: {
             project: { key: settings[:project_key] },
-            summary: "Rainforest bug: #{'failed_tests'}",
-            description: "Creating of an issue using project keys and issue type names using the REST API",
+            summary: "Rainforest found a bug in '#{test[:name]}'",
+            description: "Failed test name: #{test[:name]}\n#{test[:url]}",
             issuetype: {
               name: "Bug"
             }
@@ -41,8 +56,6 @@ module Integrations
       end
     end
 
-    private
-
     def url
       "#{jira_base_url}/rest/api/2/issue/"
     end
@@ -51,6 +64,10 @@ module Integrations
       # MAKE SURE IT DOESN'T HAVE A TRAILING SLASH
       base_url = settings[:jira_base_url]
       base_url.last == "/" ? base_url.chop : base_url
+    end
+
+    def has_failed_tests?
+      !!(payload[:failed_test] || payload[:failed_tests])
     end
   end
 end
