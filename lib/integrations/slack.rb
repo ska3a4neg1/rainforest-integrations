@@ -48,5 +48,13 @@ module Integrations
     def url
       settings[:url]
     end
+
+    def run_href
+      "<#{payload[:frontend_url]} | Run ##{run[:id]}#{run_description}>"
+    end
+
+    def test_href
+      "<#{payload[:frontend_url]} | Test ##{payload[:failed_test][:id]}: #{payload[:failed_test][:name]}>"
+    end
   end
 end

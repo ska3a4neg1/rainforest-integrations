@@ -17,6 +17,15 @@ hip_chat:
     - key: "notify"
       title: "True or False. Determines whether a notification will make an alert."
       required: "false"
+pivotal_tracker:
+  title: "Pivotal Tracker"
+  settings:
+    - key: "project_id"
+      title: "Project ID for new stories to be posted"
+      required: true
+    - key: "auth_token"
+      title: "Pivotal Tracker Auth token"
+      required: "true"
 jira:
   title: 'JIRA'
   settings:

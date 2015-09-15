@@ -7,7 +7,9 @@ run_completion:
     - time_to_finish
   frontend_url:
   failed_tests:
+    - id
     - name
+    - url
 run_error:
   run:
     - id
@@ -27,3 +29,4 @@ run_test_failure:
   failed_test:
     - id
     - name
+    - url

@@ -1,3 +1,5 @@
+require "integrations/base"
+
 module Integrations
   class HipChat < Base
     def self.key
@@ -10,7 +12,7 @@ module Integrations
           color: message_color,
           message: message_text,
           notify: (settings[:notify] || false),
-          message_format: 'text'
+          message_format: 'html'
         }.to_json,
         headers: {
           "Authorization" => "Bearer #{settings[:auth_token]}",
@@ -48,6 +50,14 @@ module Integrations
       }
 
       color_hash[event_name]
+    end
+
+    def run_href
+      "<a href=\"#{payload[:frontend_url]}\">Run ##{run[:id]}#{run_description}</a>"
+    end
+
+    def test_href
+      "<a href=\"#{payload[:failed_test][:url]}\">Test ##{payload[:failed_test][:id]}: #{payload[:failed_test][:name]}</a>"
     end
   end
 end
