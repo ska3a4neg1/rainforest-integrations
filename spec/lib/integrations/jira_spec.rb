@@ -114,18 +114,73 @@ describe Integrations::Jira do
             send_event
           end
         end
+      end
+
+      describe 'issue content' do
+        before do
+          payload[:failed_test] = failed_test
+        end
 
         it 'has a useful summary and description' do
-          response = double('response')
-          allow(response).to receive(:code).and_return(201)
           allow(HTTParty).to receive(:post) do |url, post_payload|
             json_body = JSON.parse(post_payload[:body])
 
             expect(json_body['fields']['summary']).to eq "Rainforest found a bug in 'Always fails'"
             expect(json_body['fields']['description']).to eq "Failed test name: Always fails\nhttp://www.rainforestqa.com/"
-          end.and_return(response)
+          end.and_call_original
 
-          send_event
+          VCR.use_cassette('jira/create-issue-with-summary-and-description') do
+            send_event
+          end
+        end
+
+        context 'when a label is configured' do
+          it 'adds the label to the issue' do
+            settings[:labels] = '    rainforest '
+
+            allow(HTTParty).to receive(:post) do |url, post_payload|
+              json_body = JSON.parse(post_payload[:body])
+
+              expect(json_body['fields']['labels']).to eq ['rainforest']
+            end.and_call_original
+
+            VCR.use_cassette('jira/create-issue-with-one-label') do
+              send_event
+            end
+          end
+        end
+
+        context 'when multiple labels are configured' do
+          it 'adds the labels to the issue' do
+            settings[:labels] = '    rainforest  ,    bug '
+
+            allow(HTTParty).to receive(:post) do |url, post_payload|
+              json_body = JSON.parse(post_payload[:body])
+
+              expect(json_body['fields']['labels']).to eq ['rainforest', 'bug']
+            end.and_call_original
+
+            VCR.use_cassette('jira/create-issue-with-label') do
+              send_event
+            end
+          end
+        end
+
+        context 'when there are no label configured' do
+          ['    ', nil].each do |empty_configuration|
+            it 'does not add a label to the issue' do
+              settings[:labels] = empty_configuration
+              allow(HTTParty).to receive(:post) do |url, post_payload|
+                json_body = JSON.parse(post_payload[:body])
+
+                expect(json_body['fields']['labels']).to eq []
+              end.and_call_original
+
+              VCR.use_cassette('jira/create-issue-with-no-label') do
+              send_event
+            end
+            end
+          end
         end
       end
     end

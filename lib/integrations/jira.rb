@@ -30,7 +30,8 @@ module Integrations
             description: "Failed test name: #{test[:name]}\n#{test[:url]}",
             issuetype: {
               name: "Bug"
-            }
+            },
+            labels: configured_labels
           }
         }.to_json,
         headers: {
@@ -68,6 +69,16 @@ module Integrations
 
     def has_failed_tests?
       !!(payload[:failed_test] || payload[:failed_tests])
+    end
+
+    def configured_labels
+      if settings[:labels]
+        labels = settings[:labels].to_s.split(',')
+
+        labels.map(&:strip).reject(&:empty?).reject(&:nil?)
+      else
+        []
+      end
     end
   end
 end
