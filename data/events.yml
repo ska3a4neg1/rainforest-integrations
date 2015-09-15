@@ -29,3 +29,4 @@ run_test_failure:
   failed_test:
     - id
     - name
+    - url

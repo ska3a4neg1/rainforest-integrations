@@ -5,8 +5,8 @@ http_interactions:
     uri: https://www.pivotaltracker.com/services/v5/projects/1141528/stories
     body:
       encoding: UTF-8
-      string: '{"name":"Your Rainforest Run \u003chttp://www.rainforestqa.com/ | Run
-        #9: rainforest run\u003e errored: This is a test error.","description":null,"story_type":"bug","labels":[{"name":"rainforest"}]}'
+      string: '{"name":"Your Rainforest Run (Run #9: rainforest run - http://www.rainforestqa.com/)
+        errored: This is a test error.","description":null,"story_type":"bug","labels":[{"name":"rainforest"}]}'
     headers:
       X-Trackertoken:
       - 8537292c903ca580bcd10b800709a136
@@ -28,17 +28,17 @@ http_interactions:
       Cache-Control:
       - max-age=0, private, must-revalidate
       Date:
-      - Wed, 09 Sep 2015 21:12:16 GMT
+      - Thu, 10 Sep 2015 23:59:16 GMT
       X-Tracker-Project-Version:
-      - '47'
+      - '51'
       X-Request-Id:
-      - 25a05a01dd317a0c282b0bdb7ef1bfdb
+      - f3d1eebb89a2d3e4d46bdc6c2d6b5430
       X-Ua-Compatible:
       - IE=Edge,chrome=1
       Etag:
-      - '"c755da08aaba91eb5e6c3e314d318c2d"'
+      - '"2803b7fdeb262f4717ed2a3f30e41251"'
       X-Runtime:
-      - '0.298369'
+      - '0.252698'
       X-Rack-Cache:
       - invalidate, pass
       X-Powered-By:
@@ -57,9 +57,9 @@ http_interactions:
       - '12'
     body:
       encoding: UTF-8
-      string: '{"kind":"story","id":103040600,"project_id":1141528,"name":"Your Rainforest
-        Run <http://www.rainforestqa.com/ | Run #9: rainforest run> errored: This
-        is a test error.","story_type":"bug","current_state":"unscheduled","requested_by_id":1408618,"owner_ids":[],"labels":[{"kind":"label","id":9144470,"project_id":1141528,"name":"rainforest","created_at":"2014-08-07T20:36:35Z","updated_at":"2014-08-07T20:36:35Z"}],"created_at":"2015-09-09T21:12:16Z","updated_at":"2015-09-09T21:12:16Z","url":"https://www.pivotaltracker.com/story/show/103040600"}'
+      string: '{"kind":"story","id":103152928,"project_id":1141528,"name":"Your Rainforest
+        Run (Run #9: rainforest run - http://www.rainforestqa.com/) errored: This
+        is a test error.","story_type":"bug","current_state":"unscheduled","requested_by_id":1408618,"owner_ids":[],"labels":[{"kind":"label","id":9144470,"project_id":1141528,"name":"rainforest","created_at":"2014-08-07T20:36:35Z","updated_at":"2014-08-07T20:36:35Z"}],"created_at":"2015-09-10T23:59:16Z","updated_at":"2015-09-10T23:59:16Z","url":"https://www.pivotaltracker.com/story/show/103152928"}'
     http_version: 
-  recorded_at: Wed, 09 Sep 2015 21:12:16 GMT
+  recorded_at: Thu, 10 Sep 2015 23:59:16 GMT
 recorded_with: VCR 2.9.3
