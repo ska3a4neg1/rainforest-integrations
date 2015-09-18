@@ -3,28 +3,25 @@ slack:
   title: 'Slack'
   settings:
     - key: 'url'
-      title: 'Slack URL'
+      title: 'Slack webhook URL'
       required: true
 hip_chat:
   title: 'HipChat'
   settings:
     - key: 'room_id'
-      title: 'HipChat room id'
+      title: 'HipChat Room id'
       required: true
-    - key: 'auth_token'
-      title: 'HipChat Auth token'
+    - key: 'room_token'
+      title: 'HipChat Room Notification Token'
       required: true
-    - key: "notify"
-      title: "True or False. Determines whether a notification will make an alert."
-      required: "false"
 pivotal_tracker:
   title: "Pivotal Tracker"
   settings:
     - key: "project_id"
       title: "Project ID for new stories to be posted"
       required: true
-    - key: "auth_token"
-      title: "Pivotal Tracker Auth token"
+    - key: "api_token"
+      title: "Pivotal Tracker API token"
       required: "true"
 jira:
   title: 'JIRA'

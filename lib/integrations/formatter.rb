@@ -10,7 +10,7 @@ module Integrations
     end
 
     def test_href
-      "Test ##{payload[:failed_test][:id]}: #{payload[:failed_test][:name]} - #{payload[:failed_test][:url]}"
+      "Test ##{payload[:failed_test][:id]}: #{payload[:failed_test][:title]} - #{payload[:failed_test][:frontend_url]}"
     end
 
     def run_description
@@ -18,7 +18,7 @@ module Integrations
     end
 
     def run_completion_message
-      "#{run[:status]}. #{time_to_finish}"
+      "#{run[:state]}. #{time_to_finish}"
     end
 
     def run_error_message

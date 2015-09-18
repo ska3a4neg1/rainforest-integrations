@@ -26,8 +26,8 @@ module Integrations
         body: {
           fields: {
             project: { key: settings[:project_key] },
-            summary: "Rainforest found a bug in '#{test[:name]}'",
-            description: "Failed test name: #{test[:name]}\n#{test[:url]}",
+            summary: "Rainforest found a bug in '#{test[:title]}'",
+            description: "Failed test name: #{test[:title]}\n#{test[:frontend_url]}",
             issuetype: {
               name: "Bug"
             },

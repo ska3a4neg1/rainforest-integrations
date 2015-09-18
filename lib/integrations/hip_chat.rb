@@ -11,11 +11,11 @@ module Integrations
         body: {
           color: message_color,
           message: message_text,
-          notify: (settings[:notify] || false),
+          notify: true,
           message_format: 'html'
         }.to_json,
         headers: {
-          "Authorization" => "Bearer #{settings[:auth_token]}",
+          "Authorization" => "Bearer #{settings[:room_token]}",
           "Content-Type" => "application/json",
           "Accept" => "application/json"
         }
@@ -40,7 +40,7 @@ module Integrations
     end
 
     def message_color
-      return 'red' if payload[:run] && payload[:run][:status] == 'failed'
+      return 'red' if payload[:run] && payload[:run][:state] == 'failed'
 
       color_hash = {
         'run_completion' => "green",
@@ -57,7 +57,7 @@ module Integrations
     end
 
     def test_href
-      "<a href=\"#{payload[:failed_test][:url]}\">Test ##{payload[:failed_test][:id]}: #{payload[:failed_test][:name]}</a>"
+      "<a href=\"#{payload[:failed_test][:frontend_url]}\">Test ##{payload[:failed_test][:id]}: #{payload[:failed_test][:title]}</a>"
     end
   end
 end

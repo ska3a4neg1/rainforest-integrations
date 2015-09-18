@@ -2,14 +2,13 @@
 run_completion:
   run:
     - id
-    - status
+    - state
     - description
     - time_to_finish
   frontend_url:
   failed_tests:
-    - id
-    - name
-    - url
+    - [id, title, frontend_url]
+    - [id, title, frontend_url]
 run_error:
   run:
     - id
@@ -28,5 +27,6 @@ run_test_failure:
   frontend_url:
   failed_test:
     - id
-    - name
-    - url
+    - title
+    - frontend_url
+    - browser
