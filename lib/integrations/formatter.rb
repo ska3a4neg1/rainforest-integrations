@@ -10,7 +10,8 @@ module Integrations
     end
 
     def test_href
-      "Test ##{payload[:failed_test][:id]}: #{payload[:failed_test][:title]} - #{payload[:failed_test][:frontend_url]}"
+      failed_test = payload[:failed_test]
+      "Test ##{failed_test[:id]}: #{failed_test[:title]} - #{failed_test[:frontend_url]} (#{failed_test[:browser]})"
     end
 
     def run_description
