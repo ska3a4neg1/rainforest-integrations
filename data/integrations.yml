@@ -26,3 +26,21 @@ pivotal_tracker:
     - key: "auth_token"
       title: "Pivotal Tracker Auth token"
       required: "true"
+jira:
+  title: 'JIRA'
+  settings:
+    - key: 'username'
+      title: 'JIRA username (this is NOT your email)'
+      required: true
+    - key: 'password'
+      title: 'JIRA password'
+      required: true
+    - key: 'project_key'
+      title: 'Project Key'
+      required: true
+    - key: "jira_base_url"
+      title: "URL to your JIRA integration (ex: https://my-company.atlassian.net/)"
+      required: true
+    - key: 'labels'
+      title: 'Labels, separated by commas'
+      required: false
