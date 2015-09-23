@@ -8,7 +8,7 @@ describe Integrations::HipChat do
       {
         run: {
           id: 9,
-          status: "failed",
+          state: "failed",
           description: "rainforest run",
           time_to_finish: 750
         },
@@ -21,7 +21,7 @@ describe Integrations::HipChat do
     let(:settings) do
       {
         room_id: "Rainforestqa",
-        auth_token: "SFLaaWu13VxCd7ew4FqNnNJeCcoAZ8MF4kofX3GZ",
+        room_token: "SFLaaWu13VxCd7ew4FqNnNJeCcoAZ8MF4kofX3GZ",
         notify: true
       }
     end
@@ -36,7 +36,7 @@ describe Integrations::HipChat do
           message_format: "html"
         }.to_json,
         headers: {
-          "Authorization" => "Bearer #{settings[:auth_token]}",
+          "Authorization" => "Bearer #{settings[:room_token]}",
           "Content-Type" => "application/json",
           "Accept" => "application/json"
         }

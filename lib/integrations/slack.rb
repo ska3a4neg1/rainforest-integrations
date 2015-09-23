@@ -31,7 +31,7 @@ module Integrations
     end
 
     def message_color
-      return 'danger' if payload[:run] && payload[:run][:status] == 'failed'
+      return 'danger' if payload[:run] && payload[:run][:state] == 'failed'
 
       color_hash = {
         'run_completion' => "good",
@@ -54,7 +54,8 @@ module Integrations
     end
 
     def test_href
-      "<#{payload[:frontend_url]} | Test ##{payload[:failed_test][:id]}: #{payload[:failed_test][:name]}>"
+      failed_test = payload[:failed_test]
+      "<#{failed_test[:frontend_url]} | Test ##{failed_test[:id]}: #{failed_test[:title]}>(#{failed_test[:browser]})"
     end
   end
 end

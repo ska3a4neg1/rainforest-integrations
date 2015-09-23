@@ -12,7 +12,7 @@ describe Integration do
         expect(subject['key']).to eq 'slack'
         expect(subject['title']).to eq 'Slack'
         expect(subject['settings'].first).to eq({
-                                                       'title' => 'Slack URL',
+                                                       'title' => 'Slack webhook URL',
                                                        'key' => 'url',
                                                        'required' => true
                                                      })

@@ -56,7 +56,7 @@ describe Integrations::Slack do
           frontend_url: 'http://example.com',
           run: {
             id: 123,
-            status: 'failed',
+            state: 'failed',
             time_to_finish: (25.minutes + 3.seconds).to_i
           }
         }
@@ -180,7 +180,7 @@ describe Integrations::Slack do
           {
             run: {
               id: 3,
-              status: 'failed'
+              state: 'failed'
             }
           }
         end

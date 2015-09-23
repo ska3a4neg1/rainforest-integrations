@@ -16,7 +16,7 @@ module Integrations
           labels: [{ name: "rainforest" }]
         }.to_json,
         :headers => {
-          'X-TrackerToken' => settings[:auth_token],
+          'X-TrackerToken' => settings[:api_token],
           'Content-Type' => 'application/json',
           'Accept' => 'application/json'
         }
@@ -40,7 +40,7 @@ module Integrations
     def event_description
       if event_name == "run_completion" && payload[:failed_tests].any?
         txt = "Failed Tests:\n"
-        payload[:failed_tests].each { |test| txt += "#{test[:name]}: #{test[:url]}\n" }
+        payload[:failed_tests].each { |test| txt += "#{test[:title]}: #{test[:frontend_url]}\n" }
         txt
       end
     end

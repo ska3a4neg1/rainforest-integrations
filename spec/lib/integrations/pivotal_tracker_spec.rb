@@ -8,7 +8,7 @@ describe Integrations::PivotalTracker do
       {
         run: {
           id: 9,
-          status: "failed",
+          state: "failed",
           description: "rainforest run",
           time_to_finish: 750
         },
@@ -25,13 +25,13 @@ describe Integrations::PivotalTracker do
     let(:settings) do
       {
         project_id: 1141528,
-        auth_token: "8537292c903ca580bcd10b800709a136",
+        api_token: "8537292c903ca580bcd10b800709a136",
       }
     end
     let(:expected_message) { "Your Rainforest Run (Run #9: rainforest run - http://www.rainforestqa.com/) failed. Time to finish: 12 minutes 30 seconds" }
     let(:expected_url) { "https://www.pivotaltracker.com/services/v5/projects/#{settings[:project_id]}/stories" }
     let(:expected_description) do
-      "Failed Tests:\n#{payload[:failed_tests][0][:name]}: #{payload[:failed_tests][0][:url]}\n"
+      "Failed Tests:\n#{payload[:failed_tests][0][:title]}: #{payload[:failed_tests][0][:frontend_url]}\n"
     end
     let(:expected_params) do
       {
@@ -42,7 +42,7 @@ describe Integrations::PivotalTracker do
           labels: [{ name: "rainforest" }]
         }.to_json,
         headers: {
-          "X-TrackerToken" => "#{settings[:auth_token]}",
+          "X-TrackerToken" => "#{settings[:api_token]}",
           "Content-Type" => "application/json",
           "Accept" => "application/json"
         }
