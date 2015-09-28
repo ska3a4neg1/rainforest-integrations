@@ -23,6 +23,10 @@ module Integrations
     end
 
     def run_error_message
+      if run[:error_reason].nil? || run[:error_reason].empty?
+        run[:error_reason] = "unspecified reason (please contact help@rainforestqa.com if you'd like help debugging this)"
+      end
+
       "errored: #{run[:error_reason]}."
     end
 
