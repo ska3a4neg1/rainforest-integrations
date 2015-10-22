@@ -1,9 +1,9 @@
 require 'yaml'
 
 class Event
-  EVENTS = YAML.load File.read(Rails.root.join('data', 'events.yml')).freeze
+  EVENT_TYPES = YAML.load File.read(Rails.root.join('data', 'event_types.yml')).freeze
 
-  def self.all
-    EVENTS
+  def self.types
+    EVENT_TYPES
   end
 end

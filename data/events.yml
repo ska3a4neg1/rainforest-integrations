@@ -1,45 +1,36 @@
 ---
-- title: "Run Completion"
-  type: "run_completion"
-- title: "Run Error"
-  type: "run_error"
-- title: "Webhook Timeout"
-  type: "webhook_timeout"
-- title: "Test Failure"
-  type: "run_test_failure"
-
-# run_completion:
-#   run:
-#     id:
-#     state:
-#     description:
-#     time_to_finish:
-#   frontend_url:
-#   failed_tests:
-#     - id:
-#       title:
-#       frontend_url:
-#     - id:
-#       title:
-#       frontend_url:
-# run_error:
-#   run:
-#     id:
-#     description:
-#     error_reason:
-#   frontend_url:
-# run_webhook_timeout:
-#   run:
-#     id:
-#     description:
-#   frontend_url:
-# run_test_failure:
-#   run:
-#     id:
-#     description:
-#   frontend_url:
-#   failed_test:
-#     id:
-#     title:
-#     frontend_url:
-#     browser:
+run_completion:
+  run:
+    id:
+    state:
+    description:
+    time_to_finish:
+  frontend_url:
+  failed_tests:
+    - id:
+      title:
+      frontend_url:
+    - id:
+      title:
+      frontend_url:
+run_error:
+  run:
+    id:
+    description:
+    error_reason:
+  frontend_url:
+run_webhook_timeout:
+  run:
+    id:
+    description:
+  frontend_url:
+run_test_failure:
+  run:
+    id:
+    description:
+  frontend_url:
+  failed_test:
+    id:
+    title:
+    frontend_url:
+    browser:
