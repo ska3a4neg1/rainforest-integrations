@@ -6,11 +6,6 @@ class EventsController < ApplicationController
 
   before_action :verify_signature, only: [:create]
 
-  def index
-    events = YAML.load File.read(Rails.root.join('data', 'events.yml'))
-    render json: events
-  end
-
   def create
     begin
       body = MultiJson.load(request.body.read, symbolize_keys: true)

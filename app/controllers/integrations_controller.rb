@@ -10,6 +10,11 @@ class IntegrationsController < ApplicationController
   end
 
   def index
-    render json: Integration.all
+    @integrations = Integration.all
+    @events = Event.all
+    render json: {
+      event_types: @events,
+      defaults: @integrations
+    }
   end
 end
