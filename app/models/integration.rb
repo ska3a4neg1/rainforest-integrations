@@ -2,6 +2,7 @@ require 'yaml'
 
 class Integration
   INTEGRATIONS = YAML.load File.read(Rails.root.join('data', 'integrations.yml')).freeze
+  EVENT_TYPES = YAML.load File.read(Rails.root.join('data', 'event_types.yml')).freeze
 
   class NotFound < StandardError
   end
@@ -22,9 +23,13 @@ class Integration
     INTEGRATIONS.keys.freeze
   end
 
-  def self.all
+  def self.supported_integrations
     INTEGRATIONS.map do |key, data|
       { 'key' => key }.merge data
     end
+  end
+
+  def self.supported_event_types
+    EVENT_TYPES
   end
 end
