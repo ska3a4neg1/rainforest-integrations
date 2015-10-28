@@ -19,7 +19,7 @@ class Integration
     INTEGRATIONS.key? key
   end
 
-  def self.supported_integrations
+  def self.keys
     INTEGRATIONS.keys.freeze
   end
 

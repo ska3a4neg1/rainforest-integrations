@@ -48,8 +48,8 @@ describe IntegrationsController, type: :controller do
     it 'returns a list of schemas for all supported integrations' do
       body = JSON.parse(response.body)
       expect(body).to be_a Hash
-      expect(body['defaults'].count).to eq Integration::INTEGRATIONS.count
-      expect(body['event_types'].count). to eq Event::EVENT_TYPES.count
+      expect(body['integrations'].count).to eq Integration::INTEGRATIONS.count
+      expect(body['event_types'].count). to eq Integration::EVENT_TYPES.count
     end
   end
 end

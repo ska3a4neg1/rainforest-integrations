@@ -2,7 +2,7 @@ require 'active_support/inflector'
 require 'payload_validator'
 
 module Integrations
-  Integration.supported_integrations.each { |i| require "integrations/#{i}" }
+  Integration.keys.each { |i| require "integrations/#{i}" }
 
   class UnsupportedIntegrationError < StandardError
     def initialize(integration_name)
