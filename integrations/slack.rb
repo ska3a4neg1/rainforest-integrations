@@ -33,7 +33,8 @@ module Rainforest
         raise ConfigurationError.new(msg, original_exception: ex)
       rescue Http::Exceptions::HttpException => e
         if e.response.code == 404
-          raise ConfigurationError.new("No active webhooks", original_exception: e)
+          # 404s happen with inactive webhooks or bad tokens - should be handled in Rainforest
+          raise ConfigurationError.new("#{e.response.parsed_response}", original_exception: e)
         else
           raise e
         end
