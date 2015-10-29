@@ -152,11 +152,11 @@ describe Rainforest::Integrations::Slack do
     end
   end
 
-  context "with no active hooks" do
+  context "with no not found response" do
     let(:config) { {slack_url: 'https://hooks.slack.com/disabled_hooks' } }
 
     it 'should raise a ConfigurationError' do
-      stub_request(:post, config[:slack_url]).to_return(status: 404)
+      stub_request(:post, config[:slack_url]).to_return(status: 404, body: "Not found")
 
       expect { subject.on_event event }.to raise_error(Rainforest::Integrations::ConfigurationError)
     end
