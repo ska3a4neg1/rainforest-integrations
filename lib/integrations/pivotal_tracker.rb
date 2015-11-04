@@ -38,7 +38,7 @@ module Integrations
     end
 
     def event_description
-      if event_name == "run_completion" && payload[:failed_tests].any?
+      if event_type == "run_completion" && payload[:failed_tests].any?
         txt = "Failed Tests:\n"
         payload[:failed_tests].each { |test| txt += "#{test[:title]}: #{test[:frontend_url]}\n" }
         txt

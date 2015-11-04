@@ -49,7 +49,7 @@ module Integrations
         'run_test_failure' => "red",
       }
 
-      color_hash[event_name]
+      color_hash[event_type]
     end
 
     def run_href

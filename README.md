@@ -28,7 +28,7 @@ authentication and user settings.
 Each post to `events` should include a JSON object in the request body
 with the following keys:
 
-- `event_name`: The event name key (see below for more details).
+- `event_type`: The event name key (see below for more details).
 - `integrations`: A list of integrations to post the event to. Each
   integration object should have 2 keys: `key`, which is the key name
   of the integration (e.g. `"slack"`), and `settings`, which is an

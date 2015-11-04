@@ -7,7 +7,6 @@ module Integrations
     end
 
     def send_event
-      # send it to the integration
       response = HTTParty.post(url,
         :body => {
           :attachments => [{
@@ -21,6 +20,7 @@ module Integrations
           'Accept' => 'application/json'
         }
       )
+
       if response.code == 500 && response.parsed_response == 'no_text'
         raise Integrations::MisconfiguredIntegrationError.new('Invalid request to the Slack API (maybe the JSON structure is wrong?).')
       elsif response.code == 404 && response.parsed_response == 'Bad token'
@@ -40,7 +40,7 @@ module Integrations
         'run_test_failure' => "danger",
       }
 
-      color_hash[event_name]
+      color_hash[event_type]
     end
 
     private

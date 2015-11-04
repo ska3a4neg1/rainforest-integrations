@@ -1,7 +1,7 @@
 module Integrations
   module Formatter
     def message_text
-      message = self.send(event_name.dup.concat("_message").to_sym)
+      message = self.send(event_type.dup.concat("_message").to_sym)
       "Your Rainforest Run (#{run_href}) #{message}"
     end
 

@@ -9,14 +9,14 @@ class EventsController < ApplicationController
   def create
     begin
       body = MultiJson.load(request.body.read, symbolize_keys: true)
-      unless %i(event_name integrations payload).all? { |key| body.key? key }
+      unless %i(event_type integrations payload).all? { |key| body.key? key }
         return invalid_request
       end
 
       Integrations.send_event(body)
       render json: { status: 'ok' }, status: :created
     rescue MultiJson::ParseError
-      invalid_request
+      invalid_request('unable to parse request')
     rescue Integrations::UnsupportedIntegrationError => e
       invalid_request e.message, type: 'unsupported_integration'
     rescue Integrations::MisconfiguredIntegrationError => e
