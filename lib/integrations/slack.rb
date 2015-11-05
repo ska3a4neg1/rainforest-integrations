@@ -49,6 +49,7 @@ module Integrations
       settings[:url]
     end
 
+    # overwriting generic format for slack hyperlink format
     def run_href
       "<#{payload[:frontend_url]} | Run ##{run[:id]}#{run_description}>"
     end

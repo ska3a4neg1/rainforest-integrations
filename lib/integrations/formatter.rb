@@ -24,14 +24,14 @@ module Integrations
 
     def run_error_message
       if run[:error_reason].nil? || run[:error_reason].empty?
-        run[:error_reason] = "unspecified reason (please contact help@rainforestqa.com if you'd like help debugging this)"
+        run[:error_reason] = "unspecified (please contact help@rainforestqa.com if you'd like help debugging this)"
       end
 
-      "errored: #{run[:error_reason]}."
+      "has errored! Error Reason: #{run[:error_reason]}."
     end
 
     def webhook_timeout_message
-      "has timed out due to your webhook failing. If you need a hand debugging it, please let us know via email at help@rainforestqa.com."
+      "has timed out due to a webhook failure. If you need a hand debugging it, please let us know via email at help@rainforestqa.com."
     end
 
     def run_test_failure_message
