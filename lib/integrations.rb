@@ -7,6 +7,12 @@ module Integrations
     end
   end
 
+  class UnsupportedEventError < StandardError
+    def initialize(event_name)
+      super "Integration '#{event_name}' is not supported"
+    end
+  end
+
   class MisconfiguredIntegrationError < StandardError
   end
 

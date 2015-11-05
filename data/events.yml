@@ -19,7 +19,7 @@ run_error:
     description:
     error_reason:
   frontend_url:
-run_webhook_timeout:
+webhook_timeout:
   run:
     id:
     description:

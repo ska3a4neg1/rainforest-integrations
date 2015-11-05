@@ -84,7 +84,7 @@ in the payload:
 - **frontend_url**:
 
 
-#### `run_webhook_timeout`
+#### `webhook_timeout`
 
 - **run**: id, description
 

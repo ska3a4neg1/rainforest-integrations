@@ -45,7 +45,7 @@ module Integrations
       color_hash = {
         'run_completion' => "green",
         'run_error' => "red",
-        'run_webhook_timeout' => "red",
+        'webhook_timeout' => "red",
         'run_test_failure' => "red",
       }
 

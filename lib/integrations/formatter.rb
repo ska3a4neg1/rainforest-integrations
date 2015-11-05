@@ -30,7 +30,7 @@ module Integrations
       "errored: #{run[:error_reason]}."
     end
 
-    def run_webhook_timeout_message
+    def webhook_timeout_message
       "has timed out due to your webhook failing. If you need a hand debugging it, please let us know via email at help@rainforestqa.com."
     end
 

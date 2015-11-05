@@ -130,8 +130,8 @@ describe Integrations::Slack do
       end
     end
 
-    context "notify of run_webhook_timeout" do
-      let(:event_type) { "run_webhook_timeout" }
+    context "notify of webhook_timeout" do
+      let(:event_type) { "webhook_timeout" }
       let(:payload) do
         {
           run: {
@@ -141,7 +141,7 @@ describe Integrations::Slack do
       end
 
       it 'sends a message to Slack' do
-        VCR.use_cassette('run_webhook_timeout_notify_slack') do
+        VCR.use_cassette('webhook_timeout_notify_slack') do
           Integrations::Slack.new(event_type, payload, settings).send_event
         end
       end
@@ -213,8 +213,8 @@ describe Integrations::Slack do
       it { is_expected.to eq 'danger' }
     end
 
-    context 'run_webhook_timeout' do
-      let(:event_type) { 'run_webhook_timeout' }
+    context 'webhook_timeout' do
+      let(:event_type) { 'webhook_timeout' }
 
       it { is_expected.to eq 'danger' }
     end

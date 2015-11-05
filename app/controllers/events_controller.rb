@@ -19,6 +19,8 @@ class EventsController < ApplicationController
       invalid_request('unable to parse request')
     rescue Integrations::UnsupportedIntegrationError => e
       invalid_request e.message, type: 'unsupported_integration'
+    rescue Integrations::UnsupportedEventError => e
+      invalid_request e.message, type: 'unsupported_event'
     rescue Integrations::MisconfiguredIntegrationError => e
       invalid_request e.message, type: 'misconfigured_integration'
     rescue Integrations::UserConfigurationError => e
