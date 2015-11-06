@@ -101,7 +101,7 @@ describe Integrations::Jira do
             id: 9,
             status: "failed",
             description: "rainforest run",
-            time_to_finish: 750
+            time_taken: 750
           },
           frontend_url: "http://www.rainforestqa.com/"
         }

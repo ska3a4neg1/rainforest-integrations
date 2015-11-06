@@ -18,7 +18,7 @@ describe Integrations::Formatter do
         end
 
         it 'uses "unknown reason"' do
-          expect(class_instance.run_error_message).to eq "errored: unspecified reason (please contact help@rainforestqa.com if you'd like help debugging this)."
+          expect(class_instance.run_error_message).to eq "has errored! Error Reason: unspecified (please contact help@rainforestqa.com if you'd like help debugging this)."
         end
       end
 
@@ -28,7 +28,7 @@ describe Integrations::Formatter do
         end
 
         it 'uses "unknown reason"' do
-          expect(class_instance.run_error_message).to eq "errored: unspecified reason (please contact help@rainforestqa.com if you'd like help debugging this)."
+          expect(class_instance.run_error_message).to eq "has errored! Error Reason: unspecified (please contact help@rainforestqa.com if you'd like help debugging this)."
         end
       end
     end

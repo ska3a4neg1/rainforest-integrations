@@ -19,7 +19,7 @@ module Integrations
     end
 
     def run_completion_message
-      "#{run[:state]}. #{time_to_finish}"
+      "#{run[:state]}. #{time_taken}"
     end
 
     def run_error_message
@@ -38,8 +38,8 @@ module Integrations
       "has a failed at test! #{test_href}"
     end
 
-    def time_to_finish
-      "Time to finish: #{humanize_secs(run[:time_to_finish])}"
+    def time_taken
+      "Time to finish: #{humanize_secs(run[:time_taken])}"
     end
 
     def humanize_secs(seconds)

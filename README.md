@@ -70,34 +70,26 @@ in the payload:
 
 #### `run_completion`
 
-- **run**: id, status, description, time_to_finish
+- **run**: id, state, description, time_taken
 
-- **frontend_url**:
-
-- **failed_tests**: name
+- **failed_tests**: id, title, frontend_url
 
 
 #### `run_error`
 
 - **run**: id, description, error_reason
 
-- **frontend_url**:
-
 
 #### `webhook_timeout`
 
 - **run**: id, description
-
-- **frontend_url**:
 
 
 #### `run_test_failure`
 
 - **run**: id, description
 
-- **frontend_url**:
-
-- **failed_test**: id, name
+- **failed_test**: id, title, frontend_url, browser
 
 
 
@@ -106,19 +98,14 @@ in the payload:
 There are two steps to adding a new integration:
 
 1. Add an integration class to the `lib/integrations` directory. This
-   should inherit from the `Integrations::Base` class. It needs to
-   overwrite the `send_event` method and define a `key` class method.
-   If the integration post is unsuccessful, you should raise one of
-   the following errors:
-
-   - `Integrations::UserConfigurationError` for user configuration
+   should inherit from the `Integrations::Base` class and should
+   overwrite the `send_event` method. If the integration post is
+   unsuccessful, you should raise one of the following errors:
+   `Integrations::UserConfigurationError` for user configuration
    problems (such as invalid credentials);
-
-   - `Integrations::MisconfiguredIntegrationError` for non-user problems
-   in the integrations data from Rainforest;
-
-   - `Integrations::Error` for all other problems.
-
+   `Integrations::MisconfiguredIntegrationError` for non-user problems
+   in the integrations data from Rainforest; and `Integrations::Error`
+   for all other problems.
 2. Edit `data/integrations.yml` to add your integration (including the
    appropriate values for `title` and `settings`).
 
