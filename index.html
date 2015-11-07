@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Rainforest-integrations by ska3a4neg1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Rainforest-integrations</h1>
+      <h2 class="project-tagline">Integrations for Rainforest - feel free to fork and make a pull request if there is something you&#39;d love</h2>
+      <a href="https://github.com/ska3a4neg1/rainforest-integrations" class="btn">View on GitHub</a>
+      <a href="https://github.com/ska3a4neg1/rainforest-integrations/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/ska3a4neg1/rainforest-integrations/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="rainforest-integrations" class="anchor" href="#rainforest-integrations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Rainforest Integrations</h1>
+
+<p>This is a small web service for outbound integrations from
+Rainforest.</p>
+
+<h2>
+<a id="api" class="anchor" href="#api" aria-hidden="true"><span class="octicon octicon-link"></span></a>API</h2>
+
+<p><code>POST /events</code>
+Rainforest will post events to this endpoint (see below for details
+and the format).</p>
+
+<p><code>GET /integrations/:key</code>
+Return the schema of settings for a particular integration (see below
+for the format).</p>
+
+<p><code>GET /integrations</code>
+Return a list of schemas for all supported integrations.</p>
+
+<h3>
+<a id="general-flow" class="anchor" href="#general-flow" aria-hidden="true"><span class="octicon octicon-link"></span></a>General flow</h3>
+
+<p>Rainforest will check the API endpoint for the required settings keys
+for each integration. Every event will be posted to the <code>events</code>
+endpoint (Rainforest will determine which events to post based on user
+preferences). The payload for the <code>events</code> post should contain all the
+information necessary to complete integration event, including all
+authentication and user settings.</p>
+
+<h3>
+<a id="post-events" class="anchor" href="#post-events" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>POST /events</code>
+</h3>
+
+<h4>
+<a id="request-payload" class="anchor" href="#request-payload" aria-hidden="true"><span class="octicon octicon-link"></span></a>Request payload</h4>
+
+<p>Each post to <code>events</code> should include a JSON object in the request body
+with the following keys:</p>
+
+<ul>
+<li>
+<code>event_name</code>: The event name key (see below for more details).</li>
+<li>
+<code>integrations</code>: A list of integrations to post the event to. Each
+integration object should have 2 keys: <code>key</code>, which is the key name
+of the integration (e.g. <code>"slack"</code>), and <code>settings</code>, which is an
+object with integration-specific settings (including all
+authentication settings).</li>
+<li>
+<code>payload</code>: The appropriate event data (event-specific, see below for
+the payload types for each event).</li>
+</ul>
+
+<h4>
+<a id="response" class="anchor" href="#response" aria-hidden="true"><span class="octicon octicon-link"></span></a>Response</h4>
+
+<p><code>POST /events</code> will return a 201 response on success with a
+<code>{"status": "ok"}</code> object. On failure due to a bad request, it will
+return a 400 response and an object with two keys:</p>
+
+<ul>
+<li>
+<code>error</code>: A description of the error that that occurred.</li>
+<li>
+<code>type</code>: The type of failure (currently one of <code>invalid_request</code>,
+<code>unsupported_integration</code>, or <code>misconfigured_integration</code>).</li>
+</ul>
+
+<h3>
+<a id="get-integrations" class="anchor" href="#get-integrations" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>GET /integrations</code>
+</h3>
+
+<h4>
+<a id="response-1" class="anchor" href="#response-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Response</h4>
+
+<p><code>GET /integrations</code> will return a list of schemas for all supported
+integrations, each of which has the following keys:</p>
+
+<ul>
+<li>
+<code>key</code>: The unique key of the integration (e.g. <code>"slack"</code>).</li>
+<li>
+<code>title</code>: A human-readable title for the integration name
+(e.g. <code>"Slack"</code>).</li>
+<li>
+<code>settings</code>: A list of possible settings for the integration. Each
+setting has three keys: <code>key</code>, the key name for the setting;
+<code>title</code>, a human-readable title for the setting; and <code>required</code>, a
+boolean indicating whether the setting is required.</li>
+</ul>
+
+<p>The response object for an individual integration follows the same
+format.</p>
+
+<h2>
+<a id="event-payload" class="anchor" href="#event-payload" aria-hidden="true"><span class="octicon octicon-link"></span></a>Event payload</h2>
+
+<p>Events come with a payload that is specific to the event. The
+following events are currently supported, with the corresponding keys
+in the payload:</p>
+
+<h4>
+<a id="run_completion" class="anchor" href="#run_completion" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>run_completion</code>
+</h4>
+
+<ul>
+<li><p><strong>run</strong>: id, status, description, time_to_finish</p></li>
+<li><p><strong>frontend_url</strong>:</p></li>
+<li><p><strong>failed_tests</strong>: name</p></li>
+</ul>
+
+<h4>
+<a id="run_error" class="anchor" href="#run_error" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>run_error</code>
+</h4>
+
+<ul>
+<li><p><strong>run</strong>: id, description, error_reason</p></li>
+<li><p><strong>frontend_url</strong>:</p></li>
+</ul>
+
+<h4>
+<a id="run_webhook_timeout" class="anchor" href="#run_webhook_timeout" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>run_webhook_timeout</code>
+</h4>
+
+<ul>
+<li><p><strong>run</strong>: id, description</p></li>
+<li><p><strong>frontend_url</strong>:</p></li>
+</ul>
+
+<h4>
+<a id="run_test_failure" class="anchor" href="#run_test_failure" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>run_test_failure</code>
+</h4>
+
+<ul>
+<li><p><strong>run</strong>: id, description</p></li>
+<li><p><strong>frontend_url</strong>:</p></li>
+<li><p><strong>failed_test</strong>: id, name</p></li>
+</ul>
+
+<h2>
+<a id="adding-integrations" class="anchor" href="#adding-integrations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Adding integrations</h2>
+
+<p>There are two steps to adding a new integration:</p>
+
+<ol>
+<li>
+<p>Add an integration class to the <code>lib/integrations</code> directory. This
+should inherit from the <code>Integrations::Base</code> class. It needs to
+overwrite the <code>send_event</code> method and define a <code>key</code> class method.
+If the integration post is unsuccessful, you should raise one of
+the following errors:</p>
+
+<ul>
+<li><p><code>Integrations::UserConfigurationError</code> for user configuration
+problems (such as invalid credentials);</p></li>
+<li><p><code>Integrations::MisconfiguredIntegrationError</code> for non-user problems
+in the integrations data from Rainforest;</p></li>
+<li><p><code>Integrations::Error</code> for all other problems.</p></li>
+</ul>
+</li>
+<li><p>Edit <code>data/integrations.yml</code> to add your integration (including the
+appropriate values for <code>title</code> and <code>settings</code>).</p></li>
+</ol>
+
+<h2>
+<a id="local-setup" class="anchor" href="#local-setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>Local setup</h2>
+
+<ol>
+<li>Clone this repository</li>
+<li><code>bundle install</code></li>
+<li>You need to set the environment variable <code>INTEGRATION_SENTRY_DSN</code> (no default included due to the public nature of this project)</li>
+<li><code>rails s</code></li>
+</ol>
+
+<h3>
+<a id="for-internal-rainforest-developers" class="anchor" href="#for-internal-rainforest-developers" aria-hidden="true"><span class="octicon octicon-link"></span></a>For internal Rainforest developers</h3>
+
+<p>The main Rainforest app will try to call (by default, this is configurable) <code>http://integrations.dev</code> in development.</p>
+
+<ol>
+<li>Install Pow if you don't have it already: <code>curl get.pow.cx | sh</code>
+</li>
+<li><code>ln -s ~/rainforest/rainforest-integration ~/.pow/integrations</code></li>
+</ol>
+
+<h2>
+<a id="contributing" class="anchor" href="#contributing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contributing</h2>
+
+<ol>
+<li>Fork it ( <a href="https://github.com/%5Bmy-github-username%5D/rainforest-integrations/fork">https://github.com/[my-github-username]/rainforest-integrations/fork</a> )</li>
+<li>Create your feature branch (git checkout -b my-new-feature)</li>
+<li>Generate this README by running <code>rake doc</code>
+</li>
+<li>Commit your changes (git commit -am 'Add some feature')</li>
+<li>Push to the branch (git push origin my-new-feature)</li>
+<li>Create a new Pull Request</li>
+</ol>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/ska3a4neg1/rainforest-integrations">Rainforest-integrations</a> is maintained by <a href="https://github.com/ska3a4neg1">ska3a4neg1</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
